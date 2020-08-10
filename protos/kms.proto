@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package kms;
+
+// crypt_type:
+// 0: mock for test
+// 1: secp256k1+keccak
+// 2: sm2+sm3
+
+
+// key_id index of the key in kms
+// reverse 0/1/2 .. 256 for each crypt_type
+// For cases without key_id, for example:
+// calc tx_hash of UnverifiedTransaction or other only need hash data
+
+
+message GenerateKeyPairRequest {
+    uint32 crypt_type = 1;
+    string Description = 2;
+}
+
+message GenerateKeyPairResponse {
+    uint64 key_id = 1;
+    bytes address = 2;
+}
+
+message HashDataRequest {
+    uint64 key_id = 1;
+    bytes data = 2;
+}
+
+message HashDataResponse {
+    bytes hash = 1;
+}
+
+
+message VerifyDataHashRequest {
+    bytes data = 1;
+    bytes hash = 2;
+}
+
+message SignMessageRequest {
+    uint64 key_id = 1;
+    bytes msg = 2;
+}
+
+message SignMessageResponse {
+    bytes signature = 1;
+}
+
+message RecoverSignatureRequest {
+    bytes msg = 1;
+    bytes signature = 2;
+}
+
+message RecoverSignatureResponse {
+    bytes address = 1;
+}
+
+service KmsService {
+    // Generate a KeyPair
+    rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse);
+
+    // Hash data
+    rpc HashData(HashDataRequest) returns (HashDataResponse);
+
+    // Verify hash of data
+    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.SimpleResponse);
+
+    // Sign a message
+    rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
+
+    // Recover signature
+    rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
+}
+

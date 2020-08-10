@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package consensus;
+
+message ConsensusConfiguration {
+    uint32 block_interval = 2;
+    repeated bytes validators = 3;
+}
+
+service ConsensusService {
+    rpc Reconfigure(ConsensusConfiguration) returns (common.SimpleResponse);
+}

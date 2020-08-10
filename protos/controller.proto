@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+import "common.proto";
+import "blockchain.proto";
+
+package controller;
+
+message Flag {
+    bool flag = 1;
+}
+
+message BlockNumber {
+    uint64 block_number = 1;
+}
+
+// only used for RPCService
+message RawTransaction {
+    oneof tx {
+        blockchain.UnverifiedTransaction normal_tx = 1;
+        blockchain.UnverifiedUtxoTransaction utxo_tx = 2;
+    }
+}
+
+message SystemConfig {
+    uint32 version = 1;
+    bytes chain_id = 2;
+    bytes admin = 3;
+    uint32 block_interval = 4;
+    repeated bytes validators = 5;
+    bytes version_pre_hash = 6;
+    bytes chain_id_pre_hash = 7;
+    bytes admin_pre_hash = 8;
+    bytes block_interval_pre_hash = 9;
+    bytes validators_pre_hash = 10;
+}
+
+service RPCService {
+    // flag means latest or pending.
+    // true means pending, false means latest.
+    rpc GetBlockNumber(Flag) returns (BlockNumber);
+
+    rpc SendRawTransaction(RawTransaction) returns (common.Hash);
+
+    rpc GetBlockByHash(common.Hash) returns (blockchain.CompactBlock);
+
+    rpc GetBlockByNumber(BlockNumber) returns (blockchain.CompactBlock);
+
+    rpc GetTransaction(common.Hash) returns (RawTransaction);
+
+    rpc GetSystemConfig(common.Empty) returns (SystemConfig);
+}
+
+service Consensus2ControllerService {
+    // Consensus request a Proposal to start consensus
+    // ret: proposal hash
+    rpc GetProposal(common.Empty) returns (common.Hash);
+
+    // when Consensus received a new proposal from other nodes, it will ask controller to check it
+    // args: proposal hash
+    // ret: ok or not
+    rpc CheckProposal(common.Hash) returns (common.SimpleResponse);
+
+    // after Consensus, tell controller a proposal has committed
+    rpc CommitBlock(common.Hash) returns (common.Empty);
+}
+

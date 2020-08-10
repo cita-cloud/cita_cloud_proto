@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package common;
+
+message SimpleResponse {
+    bool is_success = 1;
+}
+
+message Empty {}
+
+message Hash {
+    bytes hash = 1;
+}

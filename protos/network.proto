@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package network;
+
+message NetworkStatusResponse {
+    uint64 peer_count = 1;
+}
+
+message NetworkMsg {
+    string module = 1;
+    string type = 2;
+    uint64 origin = 3;
+    bytes msg = 4;
+}
+
+message RegisterInfo {
+    string module_name = 1;
+    string hostname = 2;
+    string port = 3;
+}
+
+service NetworkService {
+    // send message to a single peer.
+    rpc SendMsg(NetworkMsg) returns (common.SimpleResponse);
+
+    // broadcast message to all peers.
+    rpc Broadcast(NetworkMsg) returns (common.SimpleResponse);
+
+    rpc GetNetworkStatus(common.Empty) returns (NetworkStatusResponse);
+
+    // modules which need network register its msg handler.
+    // args: module name; hostname and port of handler
+    rpc RegisterNetworkMsgHandler(RegisterInfo) returns (common.SimpleResponse);
+}
+
+// modules which need network must implement this service
+service NetworkMsgHandlerService {
+    rpc ProcessNetworkMsg(NetworkMsg) returns (common.SimpleResponse);
+}

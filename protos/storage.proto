@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package storage;
+
+enum Regions {
+    GLOBAL = 0;
+    TRANSACTIONS = 1;
+    HEADERS = 2;
+    BODIES = 3;
+    BLOCK_HASH = 4;
+    OTHER = 5;
+    BUTTON = 6;
+}
+
+message Content {
+    uint32 region = 1;
+    bytes key = 2;
+    bytes value = 3;
+}
+
+message ExtKey {
+    uint32 region = 1;
+    bytes key = 2;
+}
+
+message Value {
+    bytes value = 1;
+}
+
+service StorageService {
+    // store key/value
+    rpc Store(Content) returns (common.SimpleResponse);
+
+    // given a ext key return value
+    rpc Load(ExtKey) returns (Value);
+
+    // given a ext key delete it
+    rpc Delete(ExtKey) returns (common.SimpleResponse);
+}
