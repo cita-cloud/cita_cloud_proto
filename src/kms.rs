@@ -1,7 +1,7 @@
 // crypt_type:
 // 0: mock for test
-// 1: secp256k1+keccak
-// 2: sm2+sm3
+// 1: secp256k1 + keccak
+// 2: sm2 + sm3
 
 // key_id index of the key in kms
 // reverse 0/1/2 .. 256 for each crypt_type

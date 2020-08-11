@@ -1,8 +1,8 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsensusConfiguration {
-    #[prost(uint32, tag = "2")]
+    #[prost(uint32, tag = "1")]
     pub block_interval: u32,
-    #[prost(bytes, repeated, tag = "3")]
+    #[prost(bytes, repeated, tag = "2")]
     pub validators: ::std::vec::Vec<std::vec::Vec<u8>>,
 }
 #[doc = r" Generated client implementations."]
