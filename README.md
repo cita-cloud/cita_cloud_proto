@@ -4,7 +4,9 @@ Design grpc interface for each Micro Service.
 ### generate rust code
 
 ```
+cp -f dev_build.rs build.rs
 cargo build
+rm build.rs
 ```
 
 ### generate python code
