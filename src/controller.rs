@@ -260,7 +260,7 @@ pub mod consensus2_controller_service_client {
         #[doc = " after Consensus, tell controller a proposal has committed"]
         pub async fn commit_block(
             &mut self,
-            request: impl tonic::IntoRequest<super::super::common::Hash>,
+            request: impl tonic::IntoRequest<super::super::common::ProposalWithProof>,
         ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -599,7 +599,7 @@ pub mod consensus2_controller_service_server {
         #[doc = " after Consensus, tell controller a proposal has committed"]
         async fn commit_block(
             &self,
-            request: tonic::Request<super::super::common::Hash>,
+            request: tonic::Request<super::super::common::ProposalWithProof>,
         ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
     }
     #[derive(Debug)]
@@ -707,14 +707,14 @@ pub mod consensus2_controller_service_server {
                     #[allow(non_camel_case_types)]
                     struct CommitBlockSvc<T: Consensus2ControllerService>(pub Arc<T>);
                     impl<T: Consensus2ControllerService>
-                        tonic::server::UnaryService<super::super::common::Hash>
+                        tonic::server::UnaryService<super::super::common::ProposalWithProof>
                         for CommitBlockSvc<T>
                     {
                         type Response = super::super::common::Empty;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::super::common::Hash>,
+                            request: tonic::Request<super::super::common::ProposalWithProof>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { inner.commit_block(request).await };

@@ -11,15 +11,6 @@ pub struct BlockHeader {
     pub transactions_root: std::vec::Vec<u8>,
     #[prost(bytes, tag = "5")]
     pub proposer: std::vec::Vec<u8>,
-    /// 1. use aggregated signature, it's proof of current block
-    /// 2. otherwise, it's proof of previous block
-    #[prost(bytes, tag = "6")]
-    pub proof: std::vec::Vec<u8>,
-    /// 1. executed before consensus, it's hash of current ExecutedBlock
-    /// 2. otherwise, it's hash of previous ExecutedBlock
-    /// Note: ExecutedBlock is defined by executor.
-    #[prost(bytes, tag = "7")]
-    pub executed_block_hash: std::vec::Vec<u8>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Transaction {

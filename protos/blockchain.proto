@@ -9,13 +9,6 @@ message BlockHeader {
     uint64 height = 3;
     bytes transactions_root = 4;
     bytes proposer = 5;
-    // 1. use aggregated signature, it's proof of current block
-    // 2. otherwise, it's proof of previous block
-    bytes proof = 6;
-    // 1. executed before consensus, it's hash of current ExecutedBlock
-    // 2. otherwise, it's hash of previous ExecutedBlock
-    // Note: ExecutedBlock is defined by executor.
-    bytes executed_block_hash = 7;
 }
 
 message Transaction {

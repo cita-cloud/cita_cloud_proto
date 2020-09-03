@@ -10,8 +10,9 @@ enum Regions {
     HEADERS = 2;
     BODIES = 3;
     BLOCK_HASH = 4;
-    OTHER = 5;
-    BUTTON = 6;
+    PROOF = 5;
+    RESULT = 6;
+    BUTTON = 7;
 }
 
 message Content {

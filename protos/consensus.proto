@@ -11,4 +11,5 @@ message ConsensusConfiguration {
 
 service ConsensusService {
     rpc Reconfigure(ConsensusConfiguration) returns (common.SimpleResponse);
+    rpc CheckBlock(common.ProposalWithProof) returns (common.SimpleResponse);
 }
