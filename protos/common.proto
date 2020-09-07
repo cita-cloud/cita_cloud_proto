@@ -11,3 +11,8 @@ message Empty {}
 message Hash {
     bytes hash = 1;
 }
+
+message ProposalWithProof {
+    bytes proposal = 1;
+    bytes proof = 2;
+}

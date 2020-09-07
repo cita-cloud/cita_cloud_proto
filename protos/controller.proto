@@ -61,6 +61,6 @@ service Consensus2ControllerService {
     rpc CheckProposal(common.Hash) returns (common.SimpleResponse);
 
     // after Consensus, tell controller a proposal has committed
-    rpc CommitBlock(common.Hash) returns (common.Empty);
+    rpc CommitBlock(common.ProposalWithProof) returns (common.Empty);
 }
 

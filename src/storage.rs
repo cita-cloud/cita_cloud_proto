@@ -27,8 +27,9 @@ pub enum Regions {
     Headers = 2,
     Bodies = 3,
     BlockHash = 4,
-    Other = 5,
-    Button = 6,
+    Proof = 5,
+    Result = 6,
+    Button = 7,
 }
 #[doc = r" Generated client implementations."]
 pub mod storage_service_client {

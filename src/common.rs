@@ -10,3 +10,10 @@ pub struct Hash {
     #[prost(bytes, tag = "1")]
     pub hash: std::vec::Vec<u8>,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProposalWithProof {
+    #[prost(bytes, tag = "1")]
+    pub proposal: std::vec::Vec<u8>,
+    #[prost(bytes, tag = "2")]
+    pub proof: std::vec::Vec<u8>,
+}

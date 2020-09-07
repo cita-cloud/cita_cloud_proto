@@ -53,6 +53,21 @@ pub mod consensus_service_client {
                 http::uri::PathAndQuery::from_static("/consensus.ConsensusService/Reconfigure");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn check_block(
+            &mut self,
+            request: impl tonic::IntoRequest<super::super::common::ProposalWithProof>,
+        ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/consensus.ConsensusService/CheckBlock");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
     impl<T: Clone> Clone for ConsensusServiceClient<T> {
         fn clone(&self) -> Self {
@@ -77,6 +92,10 @@ pub mod consensus_service_server {
         async fn reconfigure(
             &self,
             request: tonic::Request<super::ConsensusConfiguration>,
+        ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status>;
+        async fn check_block(
+            &self,
+            request: tonic::Request<super::super::common::ProposalWithProof>,
         ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status>;
     }
     #[derive(Debug)]
@@ -135,6 +154,40 @@ pub mod consensus_service_server {
                         let interceptor = inner.1.clone();
                         let inner = inner.0;
                         let method = ReconfigureSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = if let Some(interceptor) = interceptor {
+                            tonic::server::Grpc::with_interceptor(codec, interceptor)
+                        } else {
+                            tonic::server::Grpc::new(codec)
+                        };
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/consensus.ConsensusService/CheckBlock" => {
+                    #[allow(non_camel_case_types)]
+                    struct CheckBlockSvc<T: ConsensusService>(pub Arc<T>);
+                    impl<T: ConsensusService>
+                        tonic::server::UnaryService<super::super::common::ProposalWithProof>
+                        for CheckBlockSvc<T>
+                    {
+                        type Response = super::super::common::SimpleResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::super::common::ProposalWithProof>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { inner.check_block(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let interceptor = inner.1.clone();
+                        let inner = inner.0;
+                        let method = CheckBlockSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = if let Some(interceptor) = interceptor {
                             tonic::server::Grpc::with_interceptor(codec, interceptor)
