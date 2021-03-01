@@ -1,0 +1,21 @@
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("cargo:rerun-if-changed=protos");
+    tonic_build::configure()
+        .build_client(true)
+        .build_server(true)
+        .format(true)
+        .compile(
+            &[
+                "controller.proto",
+                "blockchain.proto",
+                "common.proto",
+                "consensus.proto",
+                "executor.proto",
+                "network.proto",
+                "storage.proto",
+                "kms.proto",
+            ],
+            &["protos"],
+        )?;
+    Ok(())
+}
