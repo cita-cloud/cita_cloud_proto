@@ -1,15 +1,14 @@
 # CITA Cloud Proto
 Design grpc interface for each Micro Service.
 
-### generate rust code
+### Usage
 
-```
-cp -f dev_build.rs build.rs
-cargo build
-rm build.rs
+```toml
+[dependencies]
+cita_cloud_proto = { git = "https://github.com/cita-cloud/cita_cloud_proto" }
 ```
 
-### generate python code
+### Generate python code
 
 ```
 pip install grpcio grpcio-tools
