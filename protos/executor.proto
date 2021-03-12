@@ -12,9 +12,10 @@ message CallRequest {
     // 1. length is 20 bytes for evm.
     // 2. if executor is multi-vm, it will be a path.
     bytes to = 1;
+    bytes from = 2;
     // 4 bytes for evm.
-    bytes method = 2;
-    repeated bytes args = 3;
+    bytes method = 3;
+    repeated bytes args = 4;
 }
 
 message CallResponse {
