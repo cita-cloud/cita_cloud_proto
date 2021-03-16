@@ -34,6 +34,18 @@ message SystemConfig {
     bytes validators_pre_hash = 10;
 }
 
+message SoftwareVersion {
+    string version = 1;
+}
+
+message PeerCount {
+    uint64 peer_count = 1;
+}
+
+message TransactionIndex {
+    uint64 tx_index = 1;
+}
+
 service RPCService {
     // flag means latest or pending.
     // true means pending, false means latest.
@@ -48,6 +60,16 @@ service RPCService {
     rpc GetTransaction(common.Hash) returns (RawTransaction);
 
     rpc GetSystemConfig(common.Empty) returns (SystemConfig);
+
+    rpc GetVersion(common.Empty) returns (SoftwareVersion);
+
+    rpc GetBlockHash(BlockNumber) returns (common.Hash);
+
+    rpc GetTransactionBlockNumber(common.Hash) returns (BlockNumber);
+
+    rpc GetTransactionIndex(common.Hash) returns (TransactionIndex);
+
+    rpc GetPeerCount(common.Empty) returns (PeerCount);
 }
 
 service Consensus2ControllerService {
