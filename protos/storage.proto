@@ -12,7 +12,10 @@ enum Regions {
     BLOCK_HASH = 4;
     PROOF = 5;
     RESULT = 6;
-    BUTTON = 7;
+    TRANSACTION_HASH2BLOCK_HEIGHT = 7;
+    BLOCK_HASH2BLOCK_HEIGHT = 8;  // In SQL db, reuse 4
+    TRANSACTION_INDEX = 9;
+    BUTTON = 10;
 }
 
 message Content {
