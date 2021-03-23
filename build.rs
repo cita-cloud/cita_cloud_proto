@@ -14,6 +14,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "network.proto",
                 "storage.proto",
                 "kms.proto",
+                "vm/evm.proto",
             ],
             &["protos"],
         )?;

@@ -71,4 +71,3 @@ service KmsService {
     // Recover signature
     rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
 }
-
