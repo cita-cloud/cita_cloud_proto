@@ -29,3 +29,7 @@ pub mod network {
 pub mod storage {
     tonic::include_proto!("storage");
 }
+
+pub mod evm {
+    tonic::include_proto!("evm");
+}

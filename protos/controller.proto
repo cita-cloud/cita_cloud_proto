@@ -85,4 +85,3 @@ service Consensus2ControllerService {
     // after Consensus, tell controller a proposal has committed
     rpc CommitBlock(common.ProposalWithProof) returns (common.Empty);
 }
-
