@@ -1,35 +1,9 @@
-pub mod blockchain {
-    tonic::include_proto!("blockchain");
-}
-
-pub mod common {
-    tonic::include_proto!("common");
-}
-
-pub mod consensus {
-    tonic::include_proto!("consensus");
-}
-
-pub mod controller {
-    tonic::include_proto!("controller");
-}
-
-pub mod executor {
-    tonic::include_proto!("executor");
-}
-
-pub mod kms {
-    tonic::include_proto!("kms");
-}
-
-pub mod network {
-    tonic::include_proto!("network");
-}
-
-pub mod storage {
-    tonic::include_proto!("storage");
-}
-
-pub mod evm {
-    tonic::include_proto!("evm");
-}
+pub mod blockchain;
+pub mod common;
+pub mod consensus;
+pub mod controller;
+pub mod evm;
+pub mod executor;
+pub mod kms;
+pub mod network;
+pub mod storage;
