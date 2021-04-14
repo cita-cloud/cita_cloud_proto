@@ -16,7 +16,12 @@ message Address {
     bytes address = 1;
 }
 
+message Proposal {
+    uint64 height = 1;
+    bytes data = 2;
+}
+
 message ProposalWithProof {
-    bytes proposal = 1;
+    Proposal proposal = 1;
     bytes proof = 2;
 }
