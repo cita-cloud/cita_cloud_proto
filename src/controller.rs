@@ -310,11 +310,11 @@ pub mod consensus2_controller_service_client {
             Self { inner }
         }
         #[doc = " Consensus request a Proposal to start consensus"]
-        #[doc = " ret: proposal hash"]
+        #[doc = " ret: proposal"]
         pub async fn get_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::super::common::Empty>,
-        ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status> {
+        ) -> Result<tonic::Response<super::super::common::Proposal>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -332,7 +332,7 @@ pub mod consensus2_controller_service_client {
         #[doc = " ret: ok or not"]
         pub async fn check_proposal(
             &mut self,
-            request: impl tonic::IntoRequest<super::super::common::Hash>,
+            request: impl tonic::IntoRequest<super::super::common::Proposal>,
         ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -855,17 +855,17 @@ pub mod consensus2_controller_service_server {
     #[async_trait]
     pub trait Consensus2ControllerService: Send + Sync + 'static {
         #[doc = " Consensus request a Proposal to start consensus"]
-        #[doc = " ret: proposal hash"]
+        #[doc = " ret: proposal"]
         async fn get_proposal(
             &self,
             request: tonic::Request<super::super::common::Empty>,
-        ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status>;
+        ) -> Result<tonic::Response<super::super::common::Proposal>, tonic::Status>;
         #[doc = " when Consensus received a new proposal from other nodes, it will ask controller to check it"]
         #[doc = " args: proposal hash"]
         #[doc = " ret: ok or not"]
         async fn check_proposal(
             &self,
-            request: tonic::Request<super::super::common::Hash>,
+            request: tonic::Request<super::super::common::Proposal>,
         ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status>;
         #[doc = " after Consensus, tell controller a proposal has committed"]
         async fn commit_block(
@@ -912,7 +912,7 @@ pub mod consensus2_controller_service_server {
                         tonic::server::UnaryService<super::super::common::Empty>
                         for GetProposalSvc<T>
                     {
-                        type Response = super::super::common::Hash;
+                        type Response = super::super::common::Proposal;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
@@ -943,14 +943,14 @@ pub mod consensus2_controller_service_server {
                     #[allow(non_camel_case_types)]
                     struct CheckProposalSvc<T: Consensus2ControllerService>(pub Arc<T>);
                     impl<T: Consensus2ControllerService>
-                        tonic::server::UnaryService<super::super::common::Hash>
+                        tonic::server::UnaryService<super::super::common::Proposal>
                         for CheckProposalSvc<T>
                     {
                         type Response = super::super::common::SimpleResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::super::common::Hash>,
+                            request: tonic::Request<super::super::common::Proposal>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).check_proposal(request).await };
