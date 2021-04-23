@@ -13,14 +13,6 @@ message BlockNumber {
     uint64 block_number = 1;
 }
 
-// only used for RPCService
-message RawTransaction {
-    oneof tx {
-        blockchain.UnverifiedTransaction normal_tx = 1;
-        blockchain.UnverifiedUtxoTransaction utxo_tx = 2;
-    }
-}
-
 message SystemConfig {
     uint32 version = 1;
     bytes chain_id = 2;
@@ -53,13 +45,13 @@ service RPCService {
     // true means pending, false means latest.
     rpc GetBlockNumber(Flag) returns (BlockNumber);
 
-    rpc SendRawTransaction(RawTransaction) returns (common.Hash);
+    rpc SendRawTransaction(blockchain.RawTransaction) returns (common.Hash);
 
     rpc GetBlockByHash(common.Hash) returns (blockchain.CompactBlock);
 
     rpc GetBlockByNumber(BlockNumber) returns (blockchain.CompactBlock);
 
-    rpc GetTransaction(common.Hash) returns (RawTransaction);
+    rpc GetTransaction(common.Hash) returns (blockchain.RawTransaction);
 
     rpc GetSystemConfig(common.Empty) returns (SystemConfig);
 
