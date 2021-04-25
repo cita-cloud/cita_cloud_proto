@@ -39,10 +39,16 @@ message Balance {
   bytes value = 1;
 }
 
+message Nonce {
+  bytes nonce = 1;
+}
+
 service RPCService {
   rpc GetTransactionReceipt(common.Hash) returns (Receipt);
 
   rpc GetCode(common.Address) returns (ByteCode);
 
   rpc GetBalance(common.Address) returns (Balance);
+
+  rpc GetTransactionCount(common.Address) returns (Nonce);
 }
