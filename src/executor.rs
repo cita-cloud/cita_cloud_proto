@@ -56,7 +56,7 @@ pub mod executor_service_client {
         #[doc = " exec a block return executed_block_hash"]
         pub async fn exec(
             &mut self,
-            request: impl tonic::IntoRequest<super::super::blockchain::CompactBlock>,
+            request: impl tonic::IntoRequest<super::super::blockchain::Block>,
         ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -106,7 +106,7 @@ pub mod executor_service_server {
         #[doc = " exec a block return executed_block_hash"]
         async fn exec(
             &self,
-            request: tonic::Request<super::super::blockchain::CompactBlock>,
+            request: tonic::Request<super::super::blockchain::Block>,
         ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status>;
         async fn call(
             &self,
@@ -149,14 +149,14 @@ pub mod executor_service_server {
                     #[allow(non_camel_case_types)]
                     struct ExecSvc<T: ExecutorService>(pub Arc<T>);
                     impl<T: ExecutorService>
-                        tonic::server::UnaryService<super::super::blockchain::CompactBlock>
+                        tonic::server::UnaryService<super::super::blockchain::Block>
                         for ExecSvc<T>
                     {
                         type Response = super::super::common::Hash;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::super::blockchain::CompactBlock>,
+                            request: tonic::Request<super::super::blockchain::Block>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).exec(request).await };
