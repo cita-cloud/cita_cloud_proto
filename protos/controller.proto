@@ -27,11 +27,13 @@ message SystemConfig {
     bytes admin = 3;
     uint32 block_interval = 4;
     repeated bytes validators = 5;
-    bytes version_pre_hash = 6;
-    bytes chain_id_pre_hash = 7;
-    bytes admin_pre_hash = 8;
-    bytes block_interval_pre_hash = 9;
-    bytes validators_pre_hash = 10;
+    bool emergency_brake = 6;
+    bytes version_pre_hash = 7;
+    bytes chain_id_pre_hash = 8;
+    bytes admin_pre_hash = 9;
+    bytes block_interval_pre_hash = 10;
+    bytes validators_pre_hash = 11;
+    bytes emergency_brake_pre_hash = 12;
 }
 
 message SoftwareVersion {
