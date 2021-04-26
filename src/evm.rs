@@ -54,6 +54,11 @@ pub struct Balance {
     #[prost(bytes = "vec", tag = "1")]
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Nonce {
+    #[prost(bytes = "vec", tag = "1")]
+    pub nonce: ::prost::alloc::vec::Vec<u8>,
+}
 #[doc = r" Generated client implementations."]
 pub mod rpc_service_client {
     #![allow(unused_variables, dead_code, missing_docs)]
@@ -130,6 +135,20 @@ pub mod rpc_service_client {
             let path = http::uri::PathAndQuery::from_static("/evm.RPCService/GetBalance");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn get_transaction_count(
+            &mut self,
+            request: impl tonic::IntoRequest<super::super::common::Address>,
+        ) -> Result<tonic::Response<super::Nonce>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/evm.RPCService/GetTransactionCount");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
     impl<T: Clone> Clone for RpcServiceClient<T> {
         fn clone(&self) -> Self {
@@ -163,6 +182,10 @@ pub mod rpc_service_server {
             &self,
             request: tonic::Request<super::super::common::Address>,
         ) -> Result<tonic::Response<super::Balance>, tonic::Status>;
+        async fn get_transaction_count(
+            &self,
+            request: tonic::Request<super::super::common::Address>,
+        ) -> Result<tonic::Response<super::Nonce>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct RpcServiceServer<T: RpcService> {
@@ -283,6 +306,39 @@ pub mod rpc_service_server {
                         let interceptor = inner.1.clone();
                         let inner = inner.0;
                         let method = GetBalanceSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = if let Some(interceptor) = interceptor {
+                            tonic::server::Grpc::with_interceptor(codec, interceptor)
+                        } else {
+                            tonic::server::Grpc::new(codec)
+                        };
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/evm.RPCService/GetTransactionCount" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetTransactionCountSvc<T: RpcService>(pub Arc<T>);
+                    impl<T: RpcService> tonic::server::UnaryService<super::super::common::Address>
+                        for GetTransactionCountSvc<T>
+                    {
+                        type Response = super::Nonce;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::super::common::Address>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).get_transaction_count(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let interceptor = inner.1.clone();
+                        let inner = inner.0;
+                        let method = GetTransactionCountSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = if let Some(interceptor) = interceptor {
                             tonic::server::Grpc::with_interceptor(codec, interceptor)
