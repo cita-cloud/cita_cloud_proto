@@ -20,16 +20,20 @@ pub struct SystemConfig {
     pub block_interval: u32,
     #[prost(bytes = "vec", repeated, tag = "5")]
     pub validators: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes = "vec", tag = "6")]
-    pub version_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bool, tag = "6")]
+    pub emergency_brake: bool,
     #[prost(bytes = "vec", tag = "7")]
-    pub chain_id_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub version_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "8")]
-    pub admin_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub chain_id_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "9")]
-    pub block_interval_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub admin_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "10")]
+    pub block_interval_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "11")]
     pub validators_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "12")]
+    pub emergency_brake_pre_hash: ::prost::alloc::vec::Vec<u8>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SoftwareVersion {
