@@ -113,4 +113,6 @@ pub struct Block {
     pub header: ::core::option::Option<BlockHeader>,
     #[prost(message, repeated, tag = "3")]
     pub body: ::prost::alloc::vec::Vec<RawTransaction>,
+    #[prost(bytes = "vec", tag = "4")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
 }
