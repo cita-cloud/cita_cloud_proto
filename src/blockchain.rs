@@ -76,6 +76,11 @@ pub struct UnverifiedUtxoTransaction {
     pub witnesses: ::prost::alloc::vec::Vec<Witness>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RawTransactions {
+    #[prost(message, repeated, tag = "1")]
+    pub body: ::prost::alloc::vec::Vec<RawTransaction>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RawTransaction {
     #[prost(oneof = "raw_transaction::Tx", tags = "1, 2")]
     pub tx: ::core::option::Option<raw_transaction::Tx>,
@@ -111,8 +116,8 @@ pub struct Block {
     pub version: u32,
     #[prost(message, optional, tag = "2")]
     pub header: ::core::option::Option<BlockHeader>,
-    #[prost(message, repeated, tag = "3")]
-    pub body: ::prost::alloc::vec::Vec<RawTransaction>,
+    #[prost(message, optional, tag = "3")]
+    pub body: ::core::option::Option<RawTransactions>,
     #[prost(bytes = "vec", tag = "4")]
     pub proof: ::prost::alloc::vec::Vec<u8>,
 }
