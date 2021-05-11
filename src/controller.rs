@@ -50,6 +50,11 @@ pub struct TransactionIndex {
     #[prost(uint64, tag = "1")]
     pub tx_index: u64,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CommitRespond {
+    #[prost(uint64, tag = "1")]
+    pub height: u64,
+}
 #[doc = r" Generated client implementations."]
 pub mod rpc_service_client {
     #![allow(unused_variables, dead_code, missing_docs)]
@@ -339,7 +344,7 @@ pub mod consensus2_controller_service_client {
         pub async fn commit_block(
             &mut self,
             request: impl tonic::IntoRequest<super::super::common::ProposalWithProof>,
-        ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status> {
+        ) -> Result<tonic::Response<super::CommitRespond>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -861,7 +866,7 @@ pub mod consensus2_controller_service_server {
         async fn commit_block(
             &self,
             request: tonic::Request<super::super::common::ProposalWithProof>,
-        ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
+        ) -> Result<tonic::Response<super::CommitRespond>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct Consensus2ControllerServiceServer<T: Consensus2ControllerService> {
@@ -970,7 +975,7 @@ pub mod consensus2_controller_service_server {
                         tonic::server::UnaryService<super::super::common::ProposalWithProof>
                         for CommitBlockSvc<T>
                     {
-                        type Response = super::super::common::Empty;
+                        type Response = super::CommitRespond;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
