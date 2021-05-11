@@ -25,3 +25,15 @@ message ProposalWithProof {
     Proposal proposal = 1;
     bytes proof = 2;
 }
+
+message BFTProposal {
+    bytes block_hash = 1;
+    bytes pre_state_root = 2;
+    bytes pre_proof = 3;
+}
+
+message ProposalEnum {
+    oneof proposal {
+        BFTProposal bft_proposal = 1;
+    }
+}
