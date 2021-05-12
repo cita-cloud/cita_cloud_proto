@@ -51,3 +51,12 @@ pub mod proposal_enum {
         BftProposal(super::BftProposal),
     }
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ConsensusConfiguration {
+    #[prost(uint64, tag = "1")]
+    pub height: u64,
+    #[prost(uint32, tag = "2")]
+    pub block_interval: u32,
+    #[prost(bytes = "vec", repeated, tag = "3")]
+    pub validators: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}

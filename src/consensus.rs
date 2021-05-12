@@ -1,12 +1,3 @@
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ConsensusConfiguration {
-    #[prost(uint64, tag = "1")]
-    pub height: u64,
-    #[prost(uint32, tag = "2")]
-    pub block_interval: u32,
-    #[prost(bytes = "vec", repeated, tag = "3")]
-    pub validators: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-}
 #[doc = r" Generated client implementations."]
 pub mod consensus_service_client {
     #![allow(unused_variables, dead_code, missing_docs)]
@@ -42,7 +33,7 @@ pub mod consensus_service_client {
         }
         pub async fn reconfigure(
             &mut self,
-            request: impl tonic::IntoRequest<super::ConsensusConfiguration>,
+            request: impl tonic::IntoRequest<super::super::common::ConsensusConfiguration>,
         ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -93,7 +84,7 @@ pub mod consensus_service_server {
     pub trait ConsensusService: Send + Sync + 'static {
         async fn reconfigure(
             &self,
-            request: tonic::Request<super::ConsensusConfiguration>,
+            request: tonic::Request<super::super::common::ConsensusConfiguration>,
         ) -> Result<tonic::Response<super::super::common::SimpleResponse>, tonic::Status>;
         async fn check_block(
             &self,
@@ -136,14 +127,14 @@ pub mod consensus_service_server {
                     #[allow(non_camel_case_types)]
                     struct ReconfigureSvc<T: ConsensusService>(pub Arc<T>);
                     impl<T: ConsensusService>
-                        tonic::server::UnaryService<super::ConsensusConfiguration>
+                        tonic::server::UnaryService<super::super::common::ConsensusConfiguration>
                         for ReconfigureSvc<T>
                     {
                         type Response = super::super::common::SimpleResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::ConsensusConfiguration>,
+                            request: tonic::Request<super::super::common::ConsensusConfiguration>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).reconfigure(request).await };
