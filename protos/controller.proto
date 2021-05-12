@@ -40,11 +40,6 @@ message TransactionIndex {
     uint64 tx_index = 1;
 }
 
-
-message CommitRespond {
-    uint64 height = 1;
-}
-
 service RPCService {
     // flag means latest or pending.
     // true means pending, false means latest.
@@ -82,5 +77,5 @@ service Consensus2ControllerService {
     rpc CheckProposal(common.Proposal) returns (common.SimpleResponse);
 
     // after Consensus, tell controller a proposal has committed
-    rpc CommitBlock(common.ProposalWithProof) returns (CommitRespond);
+    rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfiguration);
 }

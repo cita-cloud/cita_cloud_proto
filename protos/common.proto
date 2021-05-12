@@ -37,3 +37,9 @@ message ProposalEnum {
         BFTProposal bft_proposal = 1;
     }
 }
+
+message ConsensusConfiguration {
+    uint64 height = 1;
+    uint32 block_interval = 2;
+    repeated bytes validators = 3;
+}
