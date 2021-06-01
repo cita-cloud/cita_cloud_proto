@@ -43,6 +43,10 @@ message Nonce {
   bytes nonce = 1;
 }
 
+message ByteAbi {
+  bytes bytes_abi = 1;
+}
+
 service RPCService {
   rpc GetTransactionReceipt(common.Hash) returns (Receipt);
 
@@ -51,4 +55,6 @@ service RPCService {
   rpc GetBalance(common.Address) returns (Balance);
 
   rpc GetTransactionCount(common.Address) returns (Nonce);
+
+  rpc GetAbi(common.Address) returns (ByteAbi);
 }
