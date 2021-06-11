@@ -32,11 +32,11 @@ pub struct ProposalWithProof {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BftProposal {
     #[prost(bytes = "vec", tag = "1")]
-    pub block_hash: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes = "vec", tag = "2")]
     pub pre_state_root: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes = "vec", tag = "3")]
+    #[prost(bytes = "vec", tag = "2")]
     pub pre_proof: ::prost::alloc::vec::Vec<u8>,
+    #[prost(message, optional, tag = "3")]
+    pub proposal: ::core::option::Option<super::blockchain::Block>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProposalEnum {
