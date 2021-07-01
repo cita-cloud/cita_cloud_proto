@@ -4,13 +4,7 @@ import "common.proto";
 
 package consensus;
 
-message ConsensusConfiguration {
-    uint64 height = 1;
-    uint32 block_interval = 2;
-    repeated bytes validators = 3;
-}
-
 service ConsensusService {
-    rpc Reconfigure(ConsensusConfiguration) returns (common.SimpleResponse);
+    rpc Reconfigure(common.ConsensusConfiguration) returns (common.SimpleResponse);
     rpc CheckBlock(common.ProposalWithProof) returns (common.SimpleResponse);
 }
