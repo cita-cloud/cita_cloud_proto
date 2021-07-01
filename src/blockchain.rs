@@ -76,6 +76,26 @@ pub struct UnverifiedUtxoTransaction {
     pub witnesses: ::prost::alloc::vec::Vec<Witness>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RawTransactions {
+    #[prost(message, repeated, tag = "1")]
+    pub body: ::prost::alloc::vec::Vec<RawTransaction>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RawTransaction {
+    #[prost(oneof = "raw_transaction::Tx", tags = "1, 2")]
+    pub tx: ::core::option::Option<raw_transaction::Tx>,
+}
+/// Nested message and enum types in `RawTransaction`.
+pub mod raw_transaction {
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Tx {
+        #[prost(message, tag = "1")]
+        NormalTx(super::UnverifiedTransaction),
+        #[prost(message, tag = "2")]
+        UtxoTx(super::UnverifiedUtxoTransaction),
+    }
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactBlockBody {
     /// transaction hash of UnverifiedTransaction or UnverifyedUtxoTransaction.
     #[prost(bytes = "vec", repeated, tag = "1")]
@@ -89,4 +109,15 @@ pub struct CompactBlock {
     pub header: ::core::option::Option<BlockHeader>,
     #[prost(message, optional, tag = "3")]
     pub body: ::core::option::Option<CompactBlockBody>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Block {
+    #[prost(uint32, tag = "1")]
+    pub version: u32,
+    #[prost(message, optional, tag = "2")]
+    pub header: ::core::option::Option<BlockHeader>,
+    #[prost(message, optional, tag = "3")]
+    pub body: ::core::option::Option<RawTransactions>,
+    #[prost(bytes = "vec", tag = "4")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
 }

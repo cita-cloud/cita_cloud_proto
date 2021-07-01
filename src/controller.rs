@@ -8,22 +8,6 @@ pub struct BlockNumber {
     #[prost(uint64, tag = "1")]
     pub block_number: u64,
 }
-/// only used for RPCService
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RawTransaction {
-    #[prost(oneof = "raw_transaction::Tx", tags = "1, 2")]
-    pub tx: ::core::option::Option<raw_transaction::Tx>,
-}
-/// Nested message and enum types in `RawTransaction`.
-pub mod raw_transaction {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Tx {
-        #[prost(message, tag = "1")]
-        NormalTx(super::super::blockchain::UnverifiedTransaction),
-        #[prost(message, tag = "2")]
-        UtxoTx(super::super::blockchain::UnverifiedUtxoTransaction),
-    }
-}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SystemConfig {
     #[prost(uint32, tag = "1")]
@@ -36,16 +20,20 @@ pub struct SystemConfig {
     pub block_interval: u32,
     #[prost(bytes = "vec", repeated, tag = "5")]
     pub validators: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes = "vec", tag = "6")]
-    pub version_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bool, tag = "6")]
+    pub emergency_brake: bool,
     #[prost(bytes = "vec", tag = "7")]
-    pub chain_id_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub version_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "8")]
-    pub admin_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub chain_id_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "9")]
-    pub block_interval_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    pub admin_pre_hash: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "10")]
+    pub block_interval_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "11")]
     pub validators_pre_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "12")]
+    pub emergency_brake_pre_hash: ::prost::alloc::vec::Vec<u8>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SoftwareVersion {
@@ -114,7 +102,7 @@ pub mod rpc_service_client {
         }
         pub async fn send_raw_transaction(
             &mut self,
-            request: impl tonic::IntoRequest<super::RawTransaction>,
+            request: impl tonic::IntoRequest<super::super::blockchain::RawTransaction>,
         ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -162,7 +150,8 @@ pub mod rpc_service_client {
         pub async fn get_transaction(
             &mut self,
             request: impl tonic::IntoRequest<super::super::common::Hash>,
-        ) -> Result<tonic::Response<super::RawTransaction>, tonic::Status> {
+        ) -> Result<tonic::Response<super::super::blockchain::RawTransaction>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -350,7 +339,8 @@ pub mod consensus2_controller_service_client {
         pub async fn commit_block(
             &mut self,
             request: impl tonic::IntoRequest<super::super::common::ProposalWithProof>,
-        ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status> {
+        ) -> Result<tonic::Response<super::super::common::ConsensusConfiguration>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -392,7 +382,7 @@ pub mod rpc_service_server {
         ) -> Result<tonic::Response<super::BlockNumber>, tonic::Status>;
         async fn send_raw_transaction(
             &self,
-            request: tonic::Request<super::RawTransaction>,
+            request: tonic::Request<super::super::blockchain::RawTransaction>,
         ) -> Result<tonic::Response<super::super::common::Hash>, tonic::Status>;
         async fn get_block_by_hash(
             &self,
@@ -405,7 +395,7 @@ pub mod rpc_service_server {
         async fn get_transaction(
             &self,
             request: tonic::Request<super::super::common::Hash>,
-        ) -> Result<tonic::Response<super::RawTransaction>, tonic::Status>;
+        ) -> Result<tonic::Response<super::super::blockchain::RawTransaction>, tonic::Status>;
         async fn get_system_config(
             &self,
             request: tonic::Request<super::super::common::Empty>,
@@ -494,14 +484,15 @@ pub mod rpc_service_server {
                 "/controller.RPCService/SendRawTransaction" => {
                     #[allow(non_camel_case_types)]
                     struct SendRawTransactionSvc<T: RpcService>(pub Arc<T>);
-                    impl<T: RpcService> tonic::server::UnaryService<super::RawTransaction>
+                    impl<T: RpcService>
+                        tonic::server::UnaryService<super::super::blockchain::RawTransaction>
                         for SendRawTransactionSvc<T>
                     {
                         type Response = super::super::common::Hash;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::RawTransaction>,
+                            request: tonic::Request<super::super::blockchain::RawTransaction>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).send_raw_transaction(request).await };
@@ -594,7 +585,7 @@ pub mod rpc_service_server {
                     impl<T: RpcService> tonic::server::UnaryService<super::super::common::Hash>
                         for GetTransactionSvc<T>
                     {
-                        type Response = super::RawTransaction;
+                        type Response = super::super::blockchain::RawTransaction;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
@@ -871,7 +862,7 @@ pub mod consensus2_controller_service_server {
         async fn commit_block(
             &self,
             request: tonic::Request<super::super::common::ProposalWithProof>,
-        ) -> Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
+        ) -> Result<tonic::Response<super::super::common::ConsensusConfiguration>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct Consensus2ControllerServiceServer<T: Consensus2ControllerService> {
@@ -980,7 +971,7 @@ pub mod consensus2_controller_service_server {
                         tonic::server::UnaryService<super::super::common::ProposalWithProof>
                         for CommitBlockSvc<T>
                     {
-                        type Response = super::super::common::Empty;
+                        type Response = super::super::common::ConsensusConfiguration;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,

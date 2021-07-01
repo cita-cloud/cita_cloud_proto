@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "blockchain.proto";
+
 package common;
 
 message SimpleResponse {
@@ -24,4 +26,22 @@ message Proposal {
 message ProposalWithProof {
     Proposal proposal = 1;
     bytes proof = 2;
+}
+
+message BFTProposal {
+    bytes pre_state_root = 1;
+    bytes pre_proof = 2;
+    blockchain.Block proposal = 3;
+}
+
+message ProposalEnum {
+    oneof proposal {
+        BFTProposal bft_proposal = 1;
+    }
+}
+
+message ConsensusConfiguration {
+    uint64 height = 1;
+    uint32 block_interval = 2;
+    repeated bytes validators = 3;
 }
