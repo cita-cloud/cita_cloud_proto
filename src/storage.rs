@@ -33,7 +33,8 @@ pub enum Regions {
     /// In SQL db, reuse 4
     BlockHash2blockHeight = 8,
     TransactionIndex = 9,
-    Button = 10,
+    FullBlock = 10,
+    Button = 11,
 }
 #[doc = r" Generated client implementations."]
 pub mod storage_service_client {
