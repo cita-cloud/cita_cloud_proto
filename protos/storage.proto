@@ -15,7 +15,8 @@ enum Regions {
     TRANSACTION_HASH2BLOCK_HEIGHT = 7;
     BLOCK_HASH2BLOCK_HEIGHT = 8;  // In SQL db, reuse 4
     TRANSACTION_INDEX = 9;
-    BUTTON = 10;
+    FULL_BLOCK = 10;
+    BUTTON = 11;
 }
 
 message Content {
