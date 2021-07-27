@@ -71,13 +71,13 @@ service RPCService {
 service Consensus2ControllerService {
     // Consensus request a Proposal to start consensus
     // ret: proposal
-    rpc GetProposal(common.Empty) returns (common.Proposal);
+    rpc GetProposal(common.Empty) returns (common.ProposalRespond);
 
     // when Consensus received a new proposal from other nodes, it will ask controller to check it
     // args: proposal hash
     // ret: ok or not
-    rpc CheckProposal(common.Proposal) returns (common.SimpleResponse);
+    rpc CheckProposal(common.Proposal) returns (common.Status);
 
     // after Consensus, tell controller a proposal has committed
-    rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfiguration);
+    rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfigurationRespond);
 }

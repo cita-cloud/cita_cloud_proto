@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "common.proto";
+import "blockchain.proto";
 
 package kms;
 
@@ -63,11 +64,14 @@ service KmsService {
     rpc HashData(HashDataRequest) returns (HashDataResponse);
 
     // Verify hash of data
-    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.SimpleResponse);
+    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.Status);
 
     // Sign a message
     rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
 
     // Recover signature
     rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
+
+    // verify block
+    rpc VerifyBlock(blockchain.Block) returns (common.Status);
 }
