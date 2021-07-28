@@ -37,11 +37,11 @@ message Value {
 
 service StorageService {
     // store key/value
-    rpc Store(Content) returns (common.Status);
+    rpc Store(Content) returns (common.StatusCode);
 
     // given a ext key return value
     rpc Load(ExtKey) returns (Value);
 
     // given a ext key delete it
-    rpc Delete(ExtKey) returns (common.Status);
+    rpc Delete(ExtKey) returns (common.StatusCode);
 }

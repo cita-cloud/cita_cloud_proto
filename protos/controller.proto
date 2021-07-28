@@ -76,7 +76,7 @@ service Consensus2ControllerService {
     // when Consensus received a new proposal from other nodes, it will ask controller to check it
     // args: proposal hash
     // ret: ok or not
-    rpc CheckProposal(common.Proposal) returns (common.Status);
+    rpc CheckProposal(common.Proposal) returns (common.StatusCode);
 
     // after Consensus, tell controller a proposal has committed
     rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfigurationRespond);

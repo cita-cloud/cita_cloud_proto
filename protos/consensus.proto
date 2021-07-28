@@ -6,8 +6,8 @@ package consensus;
 
 service ConsensusService {
     /// reconfigure consensus status
-    rpc Reconfigure(common.ConsensusConfiguration) returns (common.Status);
+    rpc Reconfigure(common.ConsensusConfiguration) returns (common.StatusCode);
 
     /// check block validity
-    rpc CheckBlock(common.ProposalWithProof) returns (common.Status);
+    rpc CheckBlock(common.ProposalWithProof) returns (common.StatusCode);
 }

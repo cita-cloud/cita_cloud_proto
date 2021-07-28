@@ -46,22 +46,22 @@ message ConsensusConfiguration {
     repeated bytes validators = 3;
 }
 
-message Status {
-    uint32 status = 1;
+message StatusCode {
+    uint32 code = 1;
 }
 
 message HashRespond {
-    Status status = 1;
+    StatusCode status = 1;
     Hash hash = 2;
 }
 
 message ProposalRespond {
-    Status status = 1;
+    StatusCode status = 1;
     Proposal proposal = 2;
 }
 
 message ConsensusConfigurationRespond {
-    Status status = 1;
+    StatusCode status = 1;
     ConsensusConfiguration config = 2;
 }
 

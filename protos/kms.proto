@@ -64,7 +64,7 @@ service KmsService {
     rpc HashData(HashDataRequest) returns (HashDataResponse);
 
     // Verify hash of data
-    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.Status);
+    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.StatusCode);
 
     // Sign a message
     rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
@@ -73,5 +73,5 @@ service KmsService {
     rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
 
     // verify block
-    rpc VerifyBlock(blockchain.Block) returns (common.Status);
+    rpc VerifyBlock(blockchain.Block) returns (common.StatusCode);
 }
