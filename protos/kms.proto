@@ -22,7 +22,7 @@ message GenerateKeyPairResponse {
 }
 
 message HashDataRequest {
-    bytes data = 2;
+    bytes data = 1;
 }
 
 message HashDataResponse {
@@ -50,7 +50,8 @@ message RecoverSignatureRequest {
 }
 
 message RecoverSignatureResponse {
-    bytes address = 1;
+    common.StatusCode status = 1;
+    bytes address = 2;
 }
 
 service KmsService {
