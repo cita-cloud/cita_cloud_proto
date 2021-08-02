@@ -70,7 +70,8 @@ service RPCService {
     // add new node
     rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
 
-    rpc GetPeersInfo(common.Empty) returns ()
+    // get peers info
+    rpc GetPeersInfo(common.Empty) returns (common.TotalNodeInfo);
 }
 
 service Consensus2ControllerService {

@@ -73,3 +73,12 @@ message NodeNetInfo {
 message TotalNodeNetInfo {
     repeated NodeNetInfo nodes = 1;
 }
+
+message NodeInfo {
+    bytes address = 1;
+    NodeNetInfo net_info = 2;
+}
+
+message TotalNodeInfo {
+    repeated NodeInfo nodes = 1;
+}
