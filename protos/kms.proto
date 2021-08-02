@@ -6,14 +6,15 @@ import "blockchain.proto";
 package kms;
 
 message GetCryptoInfoResponse {
-    string name = 1;
-    uint32 hash_len = 2;
-    uint32 signature_len = 3;
-    uint32 address_len = 4;
+    common.StatusCode status = 1;
+    string name = 2;
+    uint32 hash_len = 3;
+    uint32 signature_len = 4;
+    uint32 address_len = 5;
 }
 
 message GenerateKeyPairRequest {
-    string Description = 2;
+    string Description = 1;
 }
 
 message GenerateKeyPairResponse {
@@ -24,11 +25,6 @@ message GenerateKeyPairResponse {
 message HashDataRequest {
     bytes data = 1;
 }
-
-message HashDataResponse {
-    bytes hash = 1;
-}
-
 
 message VerifyDataHashRequest {
     bytes data = 1;
@@ -41,7 +37,8 @@ message SignMessageRequest {
 }
 
 message SignMessageResponse {
-    bytes signature = 1;
+    common.StatusCode status = 1;
+    bytes signature = 2;
 }
 
 message RecoverSignatureRequest {
@@ -62,7 +59,7 @@ service KmsService {
     rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse);
 
     // Hash data
-    rpc HashData(HashDataRequest) returns (HashDataResponse);
+    rpc HashData(HashDataRequest) returns (common.HashRespond);
 
     // Verify hash of data
     rpc VerifyDataHash(VerifyDataHashRequest) returns (common.StatusCode);

@@ -33,6 +33,12 @@ service NetworkService {
     // modules which need network register its msg handler.
     // args: module name; hostname and port of handler
     rpc RegisterNetworkMsgHandler(RegisterInfo) returns (common.StatusCode);
+
+    // add new node
+    rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
+
+    // get peers net info
+    rpc GetPeersNetInfo(common.Empty) returns (common.TotalNodeNetInfo);
 }
 
 // modules which need network must implement this service

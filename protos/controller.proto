@@ -66,6 +66,11 @@ service RPCService {
     rpc GetTransactionIndex(common.Hash) returns (TransactionIndex);
 
     rpc GetPeerCount(common.Empty) returns (PeerCount);
+
+    // add new node
+    rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
+
+    rpc GetPeersInfo(common.Empty) returns ()
 }
 
 service Consensus2ControllerService {

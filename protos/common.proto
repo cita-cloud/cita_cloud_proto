@@ -65,3 +65,11 @@ message ConsensusConfigurationRespond {
     ConsensusConfiguration config = 2;
 }
 
+message NodeNetInfo {
+    string multi_address = 1;
+    uint64 origin = 2;
+}
+
+message TotalNodeNetInfo {
+    repeated NodeNetInfo nodes = 1;
+}
