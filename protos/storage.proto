@@ -32,7 +32,8 @@ message ExtKey {
 }
 
 message Value {
-    bytes value = 1;
+    common.StatusCode status = 1;
+    bytes value = 2;
 }
 
 service StorageService {
