@@ -50,17 +50,17 @@ message StatusCode {
     uint32 code = 1;
 }
 
-message HashRespond {
+message HashResponse {
     StatusCode status = 1;
     Hash hash = 2;
 }
 
-message ProposalRespond {
+message ProposalResponse {
     StatusCode status = 1;
     Proposal proposal = 2;
 }
 
-message ConsensusConfigurationRespond {
+message ConsensusConfigurationResponse {
     StatusCode status = 1;
     ConsensusConfiguration config = 2;
 }

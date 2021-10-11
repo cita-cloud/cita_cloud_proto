@@ -59,7 +59,7 @@ service KmsService {
     rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse);
 
     // Hash data
-    rpc HashData(HashDataRequest) returns (common.HashRespond);
+    rpc HashData(HashDataRequest) returns (common.HashResponse);
 
     // Verify hash of data
     rpc VerifyDataHash(VerifyDataHashRequest) returns (common.StatusCode);
