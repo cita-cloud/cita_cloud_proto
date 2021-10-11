@@ -24,7 +24,7 @@ message CallResponse {
 
 service ExecutorService {
     // exec a block return executed_block_hash
-    rpc Exec(blockchain.Block) returns (common.HashRespond);
+    rpc Exec(blockchain.Block) returns (common.HashResponse);
 
     rpc Call(CallRequest) returns (CallResponse);
 }
