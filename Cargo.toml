@@ -1,8 +1,11 @@
 [package]
 name = "cita_cloud_proto"
-version = "6.2.0"
+version = "6.3.0"
 authors = ["Rivtower Technologies <contact@rivtower.com>"]
 edition = "2018"
+license = "Apache-2.0"
+description = "cita-cloud proto library"
+
 
 [dependencies]
 tonic = "0.5.0"
