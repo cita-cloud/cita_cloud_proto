@@ -23,19 +23,25 @@ message RegisterInfo {
 
 service NetworkService {
     // send message to a single peer.
-    rpc SendMsg(NetworkMsg) returns (common.SimpleResponse);
+    rpc SendMsg(NetworkMsg) returns (common.StatusCode);
 
     // broadcast message to all peers.
-    rpc Broadcast(NetworkMsg) returns (common.SimpleResponse);
+    rpc Broadcast(NetworkMsg) returns (common.StatusCode);
 
     rpc GetNetworkStatus(common.Empty) returns (NetworkStatusResponse);
 
     // modules which need network register its msg handler.
     // args: module name; hostname and port of handler
-    rpc RegisterNetworkMsgHandler(RegisterInfo) returns (common.SimpleResponse);
+    rpc RegisterNetworkMsgHandler(RegisterInfo) returns (common.StatusCode);
+
+    // add new node
+    rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
+
+    // get peers net info
+    rpc GetPeersNetInfo(common.Empty) returns (common.TotalNodeNetInfo);
 }
 
 // modules which need network must implement this service
 service NetworkMsgHandlerService {
-    rpc ProcessNetworkMsg(NetworkMsg) returns (common.SimpleResponse);
+    rpc ProcessNetworkMsg(NetworkMsg) returns (common.StatusCode);
 }

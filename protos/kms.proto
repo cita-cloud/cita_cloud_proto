@@ -1,18 +1,20 @@
 syntax = "proto3";
 
 import "common.proto";
+import "blockchain.proto";
 
 package kms;
 
 message GetCryptoInfoResponse {
-    string name = 1;
-    uint32 hash_len = 2;
-    uint32 signature_len = 3;
-    uint32 address_len = 4;
+    common.StatusCode status = 1;
+    string name = 2;
+    uint32 hash_len = 3;
+    uint32 signature_len = 4;
+    uint32 address_len = 5;
 }
 
 message GenerateKeyPairRequest {
-    string Description = 2;
+    string Description = 1;
 }
 
 message GenerateKeyPairResponse {
@@ -21,13 +23,8 @@ message GenerateKeyPairResponse {
 }
 
 message HashDataRequest {
-    bytes data = 2;
+    bytes data = 1;
 }
-
-message HashDataResponse {
-    bytes hash = 1;
-}
-
 
 message VerifyDataHashRequest {
     bytes data = 1;
@@ -40,7 +37,8 @@ message SignMessageRequest {
 }
 
 message SignMessageResponse {
-    bytes signature = 1;
+    common.StatusCode status = 1;
+    bytes signature = 2;
 }
 
 message RecoverSignatureRequest {
@@ -49,7 +47,8 @@ message RecoverSignatureRequest {
 }
 
 message RecoverSignatureResponse {
-    bytes address = 1;
+    common.StatusCode status = 1;
+    bytes address = 2;
 }
 
 service KmsService {
@@ -60,14 +59,17 @@ service KmsService {
     rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse);
 
     // Hash data
-    rpc HashData(HashDataRequest) returns (HashDataResponse);
+    rpc HashData(HashDataRequest) returns (common.HashResponse);
 
     // Verify hash of data
-    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.SimpleResponse);
+    rpc VerifyDataHash(VerifyDataHashRequest) returns (common.StatusCode);
 
     // Sign a message
     rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
 
     // Recover signature
     rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
+
+    // check transactions
+    rpc CheckTransactions(blockchain.RawTransactions) returns (common.StatusCode);
 }

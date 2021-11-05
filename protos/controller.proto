@@ -66,18 +66,24 @@ service RPCService {
     rpc GetTransactionIndex(common.Hash) returns (TransactionIndex);
 
     rpc GetPeerCount(common.Empty) returns (PeerCount);
+
+    // add new node
+    rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
+
+    // get peers info
+    rpc GetPeersInfo(common.Empty) returns (common.TotalNodeInfo);
 }
 
 service Consensus2ControllerService {
     // Consensus request a Proposal to start consensus
     // ret: proposal
-    rpc GetProposal(common.Empty) returns (common.Proposal);
+    rpc GetProposal(common.Empty) returns (common.ProposalResponse);
 
     // when Consensus received a new proposal from other nodes, it will ask controller to check it
     // args: proposal hash
     // ret: ok or not
-    rpc CheckProposal(common.Proposal) returns (common.SimpleResponse);
+    rpc CheckProposal(common.Proposal) returns (common.StatusCode);
 
     // after Consensus, tell controller a proposal has committed
-    rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfiguration);
+    rpc CommitBlock(common.ProposalWithProof) returns (common.ConsensusConfigurationResponse);
 }

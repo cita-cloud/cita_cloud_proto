@@ -4,10 +4,6 @@ import "blockchain.proto";
 
 package common;
 
-message SimpleResponse {
-    bool is_success = 1;
-}
-
 message Empty {}
 
 message Hash {
@@ -48,4 +44,41 @@ message ConsensusConfiguration {
     uint64 height = 1;
     uint32 block_interval = 2;
     repeated bytes validators = 3;
+}
+
+message StatusCode {
+    uint32 code = 1;
+}
+
+message HashResponse {
+    StatusCode status = 1;
+    Hash hash = 2;
+}
+
+message ProposalResponse {
+    StatusCode status = 1;
+    Proposal proposal = 2;
+}
+
+message ConsensusConfigurationResponse {
+    StatusCode status = 1;
+    ConsensusConfiguration config = 2;
+}
+
+message NodeNetInfo {
+    string multi_address = 1;
+    uint64 origin = 2;
+}
+
+message TotalNodeNetInfo {
+    repeated NodeNetInfo nodes = 1;
+}
+
+message NodeInfo {
+    bytes address = 1;
+    NodeNetInfo net_info = 2;
+}
+
+message TotalNodeInfo {
+    repeated NodeInfo nodes = 1;
 }
