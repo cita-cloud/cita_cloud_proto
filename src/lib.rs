@@ -47,3 +47,7 @@ pub mod storage {
 pub mod evm {
     tonic::include_proto!("evm");
 }
+
+pub mod health_check {
+    tonic::include_proto!("grpc.health.v1");
+}
