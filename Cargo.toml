@@ -2,7 +2,7 @@
 name = "cita_cloud_proto"
 version = "6.4.0"
 authors = ["Rivtower Technologies <contact@rivtower.com>"]
-edition = "2018"
+edition = "2021"
 license = "Apache-2.0"
 description = "cita-cloud proto library"
 
