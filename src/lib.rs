@@ -32,8 +32,8 @@ pub mod executor {
     tonic::include_proto!("executor");
 }
 
-pub mod kms {
-    tonic::include_proto!("kms");
+pub mod crypto {
+    tonic::include_proto!("crypto");
 }
 
 pub mod network {
