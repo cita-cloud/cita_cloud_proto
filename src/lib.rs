@@ -51,3 +51,6 @@ pub mod evm {
 pub mod health_check {
     tonic::include_proto!("grpc.health.v1");
 }
+
+pub mod client;
+pub mod retry;
