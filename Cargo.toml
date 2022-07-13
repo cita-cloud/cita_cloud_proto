@@ -11,6 +11,12 @@ description = "cita-cloud proto library"
 tonic = "0.7.2"
 prost = "0.10.4"
 tokio = { version = "1.9.0", features = ["full"] }
+thiserror = "1.0"
+http = "0.2"
+futures-retry = "0.6.0"
+backoff = "0.4"
+log = "0.4"
+async-trait = "0.1"
 
 [build-dependencies]
 tonic-build = "0.7.2"
