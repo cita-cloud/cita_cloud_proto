@@ -30,6 +30,8 @@ message CallRequest {
     // 4 bytes for evm.
     bytes method = 3;
     repeated bytes args = 4;
+    // 5 block height for evm.
+    uint64 height = 5;
 }
 
 message CallResponse {
