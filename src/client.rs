@@ -48,7 +48,7 @@ impl ClientOptions {
         }
     }
 
-    pub async fn connect_controller(
+    pub fn connect_controller(
         &self,
     ) -> Result<RetryClient<Consensus2ControllerServiceClient<InterceptedSvc>>, ClientInitError>
     {
@@ -62,7 +62,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_network(
+    pub fn connect_network(
         &self,
     ) -> Result<RetryClient<NetworkServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -75,7 +75,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_network_msg_handler(
+    pub fn connect_network_msg_handler(
         &self,
     ) -> Result<RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -88,7 +88,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_consensus(
+    pub fn connect_consensus(
         &self,
     ) -> Result<RetryClient<ConsensusServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -101,7 +101,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_crypto(
+    pub fn connect_crypto(
         &self,
     ) -> Result<RetryClient<CryptoServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -114,7 +114,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_executor(
+    pub fn connect_executor(
         &self,
     ) -> Result<RetryClient<ExecutorServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -127,7 +127,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_storage(
+    pub fn connect_storage(
         &self,
     ) -> Result<RetryClient<StorageServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
@@ -140,7 +140,7 @@ impl ClientOptions {
         Ok(retry_client)
     }
 
-    pub async fn connect_rpc(
+    pub fn connect_rpc(
         &self,
     ) -> Result<RetryClient<RpcServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
