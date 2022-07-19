@@ -18,6 +18,7 @@ use crate::{
     controller::consensus2_controller_service_client::Consensus2ControllerServiceClient,
     controller::rpc_service_client::RpcServiceClient,
     crypto::crypto_service_client::CryptoServiceClient,
+    evm::rpc_service_client::RpcServiceClient as EVMServiceClient,
     executor::executor_service_client::ExecutorServiceClient,
     network::network_msg_handler_service_client::NetworkMsgHandlerServiceClient,
     network::network_service_client::NetworkServiceClient,
@@ -152,6 +153,19 @@ impl ClientOptions {
         let retry_client = RetryClient::new(client, self.retry_config.clone());
         Ok(retry_client)
     }
+
+    pub fn connect_evm(
+        &self,
+    ) -> Result<RetryClient<EVMServiceClient<InterceptedSvc>>, ClientInitError> {
+        let channel = Channel::from_shared(self.target_url.to_string())?;
+        let channel = channel.connect_lazy();
+        let interceptor = ServiceCallInterceptor {
+            client_name: self.client_name.clone(),
+        };
+        let client = EVMServiceClient::with_interceptor(channel, interceptor);
+        let retry_client = RetryClient::new(client, self.retry_config.clone());
+        Ok(retry_client)
+    }
 }
 
 /// Interceptor which attaches common metadata (like "client-name") to every outgoing call
@@ -237,7 +251,7 @@ impl From<RetryConfig> for ExponentialBackoff {
     }
 }
 
-use crate::{blockchain, common, controller, crypto, executor, network, storage};
+use crate::{blockchain, common, controller, crypto, evm, executor, network, storage};
 
 /// Define Traits for clients
 #[async_trait::async_trait]
@@ -316,6 +330,25 @@ pub trait RPCClientTrait {
         &self,
         e: common::Empty,
     ) -> Result<common::TotalNodeInfo, tonic::Status>;
+}
+
+#[async_trait::async_trait]
+pub trait EVMClientTrait {
+    async fn get_transaction_receipt(
+        &self,
+        hash: common::Hash,
+    ) -> Result<evm::Receipt, tonic::Status>;
+
+    async fn get_code(&self, address: common::Address) -> Result<evm::ByteCode, tonic::Status>;
+
+    async fn get_balance(&self, address: common::Address) -> Result<evm::Balance, tonic::Status>;
+
+    async fn get_transaction_count(
+        &self,
+        address: common::Address,
+    ) -> Result<evm::Nonce, tonic::Status>;
+
+    async fn get_abi(&self, address: common::Address) -> Result<evm::ByteAbi, tonic::Status>;
 }
 
 #[async_trait::async_trait]
