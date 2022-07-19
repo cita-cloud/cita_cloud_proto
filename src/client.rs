@@ -19,6 +19,7 @@ use crate::{
     controller::rpc_service_client::RpcServiceClient,
     crypto::crypto_service_client::CryptoServiceClient,
     executor::executor_service_client::ExecutorServiceClient,
+    network::network_msg_handler_service_client::NetworkMsgHandlerServiceClient,
     network::network_service_client::NetworkServiceClient,
     storage::storage_service_client::StorageServiceClient,
 };
@@ -70,6 +71,19 @@ impl ClientOptions {
             client_name: self.client_name.clone(),
         };
         let client = NetworkServiceClient::with_interceptor(channel, interceptor);
+        let retry_client = RetryClient::new(client, self.retry_config.clone());
+        Ok(retry_client)
+    }
+
+    pub async fn connect_network_msg_handler(
+        &self,
+    ) -> Result<RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>>, ClientInitError> {
+        let channel = Channel::from_shared(self.target_url.to_string())?;
+        let channel = channel.connect().await?;
+        let interceptor = ServiceCallInterceptor {
+            client_name: self.client_name.clone(),
+        };
+        let client = NetworkMsgHandlerServiceClient::with_interceptor(channel, interceptor);
         let retry_client = RetryClient::new(client, self.retry_config.clone());
         Ok(retry_client)
     }
@@ -351,6 +365,14 @@ pub trait NetworkClientTrait {
         &self,
         e: common::Empty,
     ) -> Result<common::TotalNodeNetInfo, tonic::Status>;
+}
+
+#[async_trait::async_trait]
+pub trait NetworkMsgHandlerServiceClientTrait {
+    async fn process_network_msg(
+        &self,
+        msg: network::NetworkMsg,
+    ) -> Result<common::StatusCode, tonic::Status>;
 }
 
 #[async_trait::async_trait]

@@ -15,13 +15,14 @@
 use crate::{
     client::{
         ConsensusClientTrait, ControllerClientTrait, CryptoClientTrait, ExecutorClientTrait,
-        InterceptedSvc, NetworkClientTrait, RPCClientTrait, RetryConfig, StorageClientTrait,
+        InterceptedSvc, NetworkClientTrait, NetworkMsgHandlerServiceClientTrait, RPCClientTrait, RetryConfig, StorageClientTrait,
     },
     consensus::consensus_service_client::ConsensusServiceClient,
     controller::consensus2_controller_service_client::Consensus2ControllerServiceClient,
     controller::rpc_service_client::RpcServiceClient,
     crypto::crypto_service_client::CryptoServiceClient,
     executor::executor_service_client::ExecutorServiceClient,
+    network::network_msg_handler_service_client::NetworkMsgHandlerServiceClient,
     network::network_service_client::NetworkServiceClient,
     storage::storage_service_client::StorageServiceClient,
 };
@@ -366,6 +367,16 @@ impl NetworkClientTrait for RetryClient<NetworkServiceClient<InterceptedSvc>> {
         e: common::Empty,
     ) -> Result<common::TotalNodeNetInfo, tonic::Status> {
         retry_call!(self, get_peers_net_info, e.clone())
+    }
+}
+
+#[async_trait::async_trait]
+impl NetworkMsgHandlerServiceClientTrait for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>> {
+    async fn process_network_msg(
+        &self,
+        msg: network::NetworkMsg,
+    ) -> Result<common::StatusCode, tonic::Status> {
+        retry_call!(self, process_network_msg, msg.clone())
     }
 }
 
