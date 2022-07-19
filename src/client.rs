@@ -53,7 +53,7 @@ impl ClientOptions {
     ) -> Result<RetryClient<Consensus2ControllerServiceClient<InterceptedSvc>>, ClientInitError>
     {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -66,7 +66,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<NetworkServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -79,7 +79,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -92,7 +92,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<ConsensusServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -105,7 +105,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<CryptoServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -118,7 +118,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<ExecutorServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -131,7 +131,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<StorageServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };
@@ -144,7 +144,7 @@ impl ClientOptions {
         &self,
     ) -> Result<RetryClient<RpcServiceClient<InterceptedSvc>>, ClientInitError> {
         let channel = Channel::from_shared(self.target_url.to_string())?;
-        let channel = channel.connect_lazy().await?;
+        let channel = channel.connect_lazy();
         let interceptor = ServiceCallInterceptor {
             client_name: self.client_name.clone(),
         };

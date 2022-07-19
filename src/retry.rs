@@ -373,7 +373,8 @@ impl NetworkClientTrait for RetryClient<NetworkServiceClient<InterceptedSvc>> {
 
 #[async_trait::async_trait]
 impl NetworkMsgHandlerServiceClientTrait
-    for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>> {
+    for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>>
+{
     async fn process_network_msg(
         &self,
         msg: network::NetworkMsg,
