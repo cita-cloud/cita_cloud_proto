@@ -15,7 +15,8 @@
 use crate::{
     client::{
         ConsensusClientTrait, ControllerClientTrait, CryptoClientTrait, ExecutorClientTrait,
-        InterceptedSvc, NetworkClientTrait, NetworkMsgHandlerServiceClientTrait, RPCClientTrait, RetryConfig, StorageClientTrait,
+        InterceptedSvc, NetworkClientTrait, NetworkMsgHandlerServiceClientTrait, RPCClientTrait,
+        RetryConfig, StorageClientTrait,
     },
     consensus::consensus_service_client::ConsensusServiceClient,
     controller::consensus2_controller_service_client::Consensus2ControllerServiceClient,
@@ -371,7 +372,8 @@ impl NetworkClientTrait for RetryClient<NetworkServiceClient<InterceptedSvc>> {
 }
 
 #[async_trait::async_trait]
-impl NetworkMsgHandlerServiceClientTrait for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>> {
+impl NetworkMsgHandlerServiceClientTrait
+    for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>> {
     async fn process_network_msg(
         &self,
         msg: network::NetworkMsg,
