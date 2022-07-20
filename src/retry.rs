@@ -14,14 +14,17 @@
 
 use crate::{
     client::{
-        ConsensusClientTrait, ControllerClientTrait, CryptoClientTrait, ExecutorClientTrait,
-        InterceptedSvc, NetworkClientTrait, RPCClientTrait, RetryConfig, StorageClientTrait,
+        ConsensusClientTrait, ControllerClientTrait, CryptoClientTrait, EVMClientTrait,
+        ExecutorClientTrait, InterceptedSvc, NetworkClientTrait,
+        NetworkMsgHandlerServiceClientTrait, RPCClientTrait, RetryConfig, StorageClientTrait,
     },
     consensus::consensus_service_client::ConsensusServiceClient,
     controller::consensus2_controller_service_client::Consensus2ControllerServiceClient,
     controller::rpc_service_client::RpcServiceClient,
     crypto::crypto_service_client::CryptoServiceClient,
+    evm::rpc_service_client::RpcServiceClient as EVMServiceClient,
     executor::executor_service_client::ExecutorServiceClient,
+    network::network_msg_handler_service_client::NetworkMsgHandlerServiceClient,
     network::network_service_client::NetworkServiceClient,
     storage::storage_service_client::StorageServiceClient,
 };
@@ -190,7 +193,7 @@ macro_rules! retry_call {
     }}
 }
 
-use crate::{blockchain, common, controller, crypto, executor, network, storage};
+use crate::{blockchain, common, controller, crypto, evm, executor, network, storage};
 
 #[async_trait::async_trait]
 impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
@@ -301,6 +304,35 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
 }
 
 #[async_trait::async_trait]
+impl EVMClientTrait for RetryClient<EVMServiceClient<InterceptedSvc>> {
+    async fn get_transaction_receipt(
+        &self,
+        hash: common::Hash,
+    ) -> Result<evm::Receipt, tonic::Status> {
+        retry_call!(self, get_transaction_receipt, hash.clone())
+    }
+
+    async fn get_code(&self, address: common::Address) -> Result<evm::ByteCode, tonic::Status> {
+        retry_call!(self, get_code, address.clone())
+    }
+
+    async fn get_balance(&self, address: common::Address) -> Result<evm::Balance, tonic::Status> {
+        retry_call!(self, get_balance, address.clone())
+    }
+
+    async fn get_transaction_count(
+        &self,
+        address: common::Address,
+    ) -> Result<evm::Nonce, tonic::Status> {
+        retry_call!(self, get_transaction_count, address.clone())
+    }
+
+    async fn get_abi(&self, address: common::Address) -> Result<evm::ByteAbi, tonic::Status> {
+        retry_call!(self, get_abi, address.clone())
+    }
+}
+
+#[async_trait::async_trait]
 impl ControllerClientTrait for RetryClient<Consensus2ControllerServiceClient<InterceptedSvc>> {
     async fn get_proposal(
         &self,
@@ -366,6 +398,18 @@ impl NetworkClientTrait for RetryClient<NetworkServiceClient<InterceptedSvc>> {
         e: common::Empty,
     ) -> Result<common::TotalNodeNetInfo, tonic::Status> {
         retry_call!(self, get_peers_net_info, e.clone())
+    }
+}
+
+#[async_trait::async_trait]
+impl NetworkMsgHandlerServiceClientTrait
+    for RetryClient<NetworkMsgHandlerServiceClient<InterceptedSvc>>
+{
+    async fn process_network_msg(
+        &self,
+        msg: network::NetworkMsg,
+    ) -> Result<common::StatusCode, tonic::Status> {
+        retry_call!(self, process_network_msg, msg.clone())
     }
 }
 
