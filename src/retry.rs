@@ -253,6 +253,13 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
         retry_call!(self, get_system_config, e.clone())
     }
 
+    async fn get_system_config_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<controller::SystemConfig, tonic::Status> {
+        retry_call!(self, get_system_config_by_number, n.clone())
+    }
+
     async fn get_version(
         &self,
         e: common::Empty,

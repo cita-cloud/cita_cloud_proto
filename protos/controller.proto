@@ -77,6 +77,8 @@ service RPCService {
 
     rpc GetSystemConfig(common.Empty) returns (SystemConfig);
 
+    rpc GetSystemConfigByNumber(BlockNumber) returns (SystemConfig);
+
     rpc GetVersion(common.Empty) returns (SoftwareVersion);
 
     rpc GetBlockHash(BlockNumber) returns (common.Hash);

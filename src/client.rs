@@ -296,6 +296,11 @@ pub trait RPCClientTrait {
         e: common::Empty,
     ) -> Result<controller::SystemConfig, tonic::Status>;
 
+    async fn get_system_config_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<controller::SystemConfig, tonic::Status>;
+
     async fn get_version(
         &self,
         e: common::Empty,
