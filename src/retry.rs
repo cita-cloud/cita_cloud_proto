@@ -225,11 +225,32 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
         retry_call!(self, get_block_by_hash, hash.clone())
     }
 
+    async fn get_height_by_hash(
+        &self,
+        hash: common::Hash,
+    ) -> Result<controller::BlockNumber, tonic::Status> {
+        retry_call!(self, get_height_by_hash, hash.clone())
+    }
+
     async fn get_block_by_number(
         &self,
         n: controller::BlockNumber,
     ) -> Result<blockchain::CompactBlock, tonic::Status> {
         retry_call!(self, get_block_by_number, n.clone())
+    }
+
+    async fn get_state_root_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<common::StateRoot, tonic::Status> {
+        retry_call!(self, get_state_root_by_number, n.clone())
+    }
+
+    async fn get_proof_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<common::Proof, tonic::Status> {
+        retry_call!(self, get_proof_by_number, n.clone())
     }
 
     async fn get_block_detail_by_number(

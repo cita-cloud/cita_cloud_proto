@@ -276,10 +276,25 @@ pub trait RPCClientTrait {
         hash: common::Hash,
     ) -> Result<blockchain::CompactBlock, tonic::Status>;
 
+    async fn get_height_by_hash(
+        &self,
+        hash: common::Hash,
+    ) -> Result<controller::BlockNumber, tonic::Status>;
+
     async fn get_block_by_number(
         &self,
         n: controller::BlockNumber,
     ) -> Result<blockchain::CompactBlock, tonic::Status>;
+
+    async fn get_state_root_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<common::StateRoot, tonic::Status>;
+
+    async fn get_proof_by_number(
+        &self,
+        n: controller::BlockNumber,
+    ) -> Result<common::Proof, tonic::Status>;
 
     async fn get_block_detail_by_number(
         &self,

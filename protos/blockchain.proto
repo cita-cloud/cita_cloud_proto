@@ -95,4 +95,5 @@ message Block {
     BlockHeader header = 2;
     RawTransactions body = 3;
     bytes proof = 4;
+    bytes state_root = 5;
 }
