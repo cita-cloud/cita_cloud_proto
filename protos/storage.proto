@@ -31,7 +31,8 @@ enum Regions {
     TRANSACTION_INDEX = 9;
     COMPACT_BLOCK = 10;
     FULL_BLOCK = 11;
-    BUTTON = 12;
+    All_BLOCK_DATA = 12;
+    BUTTON = 13;
 }
 
 message Content {

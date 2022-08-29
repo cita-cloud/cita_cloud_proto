@@ -24,6 +24,14 @@ message Hash {
     bytes hash = 1;
 }
 
+message StateRoot {
+    bytes state_root = 1;
+}
+
+message Proof {
+    bytes proof = 1;
+}
+
 message Hashes {
     repeated Hash hashes = 1;
 }
