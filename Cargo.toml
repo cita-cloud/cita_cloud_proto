@@ -1,6 +1,6 @@
 [package]
 name = "cita_cloud_proto"
-version = "6.6.1"
+version = "6.6.2"
 authors = ["Rivtower Technologies <contact@rivtower.com>"]
 edition = "2021"
 license = "Apache-2.0"
@@ -8,15 +8,15 @@ description = "cita-cloud proto library"
 
 
 [dependencies]
-tonic = "0.7.2"
-prost = "0.10.4"
-tokio = { version = "1.9.0", features = ["full"] }
+tonic = "0.8"
+prost = "0.11"
+tokio = { version = "1.21", features = ["full"] }
 thiserror = "1.0"
 http = "0.2"
-futures-retry = "0.6.0"
+futures-retry = "0.6"
 backoff = "0.4"
 log = "0.4"
 async-trait = "0.1"
 
 [build-dependencies]
-tonic-build = "0.7.2"
+tonic-build = "0.8"
