@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // tonic does not derive `Eq` for the gRPC message types, which causes a warning from Clippy. The
 // current suggestion is to explicitly allow the lint in the module that imports the protos.
 // Read more: https://github.com/hyperium/tonic/issues/1056
