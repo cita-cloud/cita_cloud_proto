@@ -18,6 +18,7 @@ package evm;
 
 import "common.proto";
 import "blockchain.proto";
+import "executor.proto";
 
 message Receipt {
   bytes transaction_hash = 1;
@@ -61,6 +62,10 @@ message ByteAbi {
   bytes bytes_abi = 1;
 }
 
+message ByteQuota {
+  bytes bytes_quota = 1;
+}
+
 service RPCService {
   rpc GetTransactionReceipt(common.Hash) returns (Receipt);
 
@@ -71,4 +76,6 @@ service RPCService {
   rpc GetTransactionCount(common.Address) returns (Nonce);
 
   rpc GetAbi(common.Address) returns (ByteAbi);
+
+  rpc EstimateQuota(executor.CallRequest) returns (ByteQuota);
 }
