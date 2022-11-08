@@ -358,6 +358,13 @@ impl EVMClientTrait for RetryClient<EVMServiceClient<InterceptedSvc>> {
     async fn get_abi(&self, address: common::Address) -> Result<evm::ByteAbi, tonic::Status> {
         retry_call!(self, get_abi, address.clone())
     }
+
+    async fn estimate_quota(
+        &self,
+        request: executor::CallRequest,
+    ) -> std::result::Result<evm::ByteQuota, tonic::Status> {
+        retry_call!(self, estimate_quota, request.clone())
+    }
 }
 
 #[async_trait::async_trait]

@@ -369,6 +369,11 @@ pub trait EVMClientTrait {
     ) -> Result<evm::Nonce, tonic::Status>;
 
     async fn get_abi(&self, address: common::Address) -> Result<evm::ByteAbi, tonic::Status>;
+
+    async fn estimate_quota(
+        &self,
+        request: executor::CallRequest,
+    ) -> Result<evm::ByteQuota, tonic::Status>;
 }
 
 #[async_trait::async_trait]
