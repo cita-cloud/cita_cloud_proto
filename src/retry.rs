@@ -32,7 +32,7 @@ use backoff::{backoff::Backoff, ExponentialBackoff};
 use futures_retry::{ErrorHandler, FutureRetry, RetryPolicy};
 use log::{debug, warn};
 use std::{fmt::Debug, future::Future, time::Duration};
-use tonic::Code;
+use tonic::{Code, Status};
 
 type Result<T, E = tonic::Status> = std::result::Result<T, E>;
 
@@ -357,6 +357,13 @@ impl EVMClientTrait for RetryClient<EVMServiceClient<InterceptedSvc>> {
 
     async fn get_abi(&self, address: common::Address) -> Result<evm::ByteAbi, tonic::Status> {
         retry_call!(self, get_abi, address.clone())
+    }
+
+    async fn estimate_quota(
+        &self,
+        request: executor::CallRequest,
+    ) -> std::result::Result<evm::ByteQuota, Status> {
+        retry_call!(self, estimate_quota, request.clone())
     }
 }
 
