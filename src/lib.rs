@@ -57,5 +57,9 @@ pub mod health_check {
     tonic::include_proto!("grpc.health.v1");
 }
 
+pub mod status_code {
+    tonic::include_proto!("status_code");
+}
+
 pub mod client;
 pub mod retry;
