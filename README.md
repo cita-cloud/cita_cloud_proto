@@ -3,10 +3,6 @@ Design grpc interface for each Micro Service.
 
 ### Usage
 
-```toml
-[dependencies]
-cita_cloud_proto = { git = "https://github.com/cita-cloud/cita_cloud_proto" }
-```
 
 ### Generate python code
 
