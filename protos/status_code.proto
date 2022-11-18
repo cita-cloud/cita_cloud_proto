@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package status_code;
 
-enum StatusCode {
+enum StatusCodeEnum {
     /// Success: 0
     Success = 0;
     /// Convert int to status Error
