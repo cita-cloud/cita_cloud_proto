@@ -281,13 +281,6 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
         retry_call!(self, get_system_config_by_number, n.clone())
     }
 
-    async fn get_version(
-        &self,
-        e: common::Empty,
-    ) -> Result<controller::SoftwareVersion, tonic::Status> {
-        retry_call!(self, get_version, e.clone())
-    }
-
     async fn get_block_hash(
         &self,
         n: controller::BlockNumber,
@@ -309,13 +302,6 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
         retry_call!(self, get_transaction_index, hash.clone())
     }
 
-    async fn get_peer_count(
-        &self,
-        e: common::Empty,
-    ) -> Result<controller::PeerCount, tonic::Status> {
-        retry_call!(self, get_peer_count, e.clone())
-    }
-
     async fn add_node(
         &self,
         node_info: common::NodeNetInfo,
@@ -323,11 +309,8 @@ impl RPCClientTrait for RetryClient<RpcServiceClient<InterceptedSvc>> {
         retry_call!(self, add_node, node_info.clone())
     }
 
-    async fn get_peers_info(
-        &self,
-        e: common::Empty,
-    ) -> Result<common::TotalNodeInfo, tonic::Status> {
-        retry_call!(self, get_peers_info, e.clone())
+    async fn get_node_status(&self, e: common::Empty) -> Result<common::NodeStatus, tonic::Status> {
+        retry_call!(self, get_node_status, e.clone())
     }
 }
 

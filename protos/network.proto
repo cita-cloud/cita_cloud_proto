@@ -50,7 +50,7 @@ service NetworkService {
 
     // add new node
     rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
-
+    
     // get peers net info
     rpc GetPeersNetInfo(common.Empty) returns (common.TotalNodeNetInfo);
 }

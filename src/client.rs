@@ -316,11 +316,6 @@ pub trait RPCClientTrait {
         n: controller::BlockNumber,
     ) -> Result<controller::SystemConfig, tonic::Status>;
 
-    async fn get_version(
-        &self,
-        e: common::Empty,
-    ) -> Result<controller::SoftwareVersion, tonic::Status>;
-
     async fn get_block_hash(
         &self,
         n: controller::BlockNumber,
@@ -336,20 +331,12 @@ pub trait RPCClientTrait {
         hash: common::Hash,
     ) -> Result<controller::TransactionIndex, tonic::Status>;
 
-    async fn get_peer_count(
-        &self,
-        e: common::Empty,
-    ) -> Result<controller::PeerCount, tonic::Status>;
-
     async fn add_node(
         &self,
         node_info: common::NodeNetInfo,
     ) -> Result<common::StatusCode, tonic::Status>;
 
-    async fn get_peers_info(
-        &self,
-        e: common::Empty,
-    ) -> Result<common::TotalNodeInfo, tonic::Status>;
+    async fn get_node_status(&self, e: common::Empty) -> Result<common::NodeStatus, tonic::Status>;
 }
 
 #[async_trait::async_trait]
