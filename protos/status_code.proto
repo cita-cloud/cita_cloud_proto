@@ -1,0 +1,204 @@
+// Copyright Rivtower Technologies LLC.
+//
+// Licensed under the Apache License; Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing; software
+// distributed under the License is distributed on an "AS IS" BASIS;
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND; either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package status_code;
+
+enum StatusCodeEnum {
+    /// Success: 0
+    Success = 0;
+    /// Convert int to status Error
+    ConvertIntError = 1;
+    /// status code is none
+    NoneStatusCode = 2;
+    /// fate error
+    FatalError = 3;
+
+    /// controller error; start from 100
+    /// node in misbehave list
+    MisbehaveNode = 100;
+    /// node in ban list
+    BannedNode = 101;
+    /// address not consistent with record origin
+    AddressOriginCheckError = 102;
+    /// provide address len is not 20
+    ProvideAddressError = 103;
+    /// message not provide address
+    NoProvideAddress = 104;
+    /// not get the block
+    NoBlock = 105;
+    /// not get the proof
+    NoProof = 106;
+    /// not get height of block which wrap tx
+    NoTxHeight = 107;
+    /// not get tx index
+    NoTxIndex = 108;
+    /// not get transaction
+    NoTransaction = 109;
+    /// not get the block height base on hash
+    NoBlockHeight = 110;
+    /// not get the block hash base on height
+    NoBlockHash = 111;
+    /// proposal is none
+    NoneProposal = 112;
+    /// block body is none
+    NoneBlockBody = 113;
+    /// block header is none
+    NoneBlockHeader = 114;
+    /// chain status is none
+    NoneChainStatus = 115;
+    /// transaction's witness is none
+    NoneWitness = 116;
+    /// transaction is none
+    NoneTransaction = 117;
+    /// utxo is none
+    NoneUtxo = 118;
+    /// raw tx is none
+    NoneRawTx = 119;
+    /// early status received
+    EarlyStatus = 120;
+    /// execute error
+    ExecuteError = 121;
+    /// proto struct encode error
+    EncodeError = 122;
+    /// proto struct encode error
+    DecodeError = 123;
+    /// no candidate block
+    NoCandidate = 124;
+    /// not get early status
+    NoEarlyStatus = 125;
+    /// fork tree no block
+    NoForkTree = 126;
+    /// find dup transaction
+    DupTransaction = 127;
+    /// proposal too high
+    ProposalTooHigh = 128;
+    /// proposal too low
+    ProposalTooLow = 129;
+    /// proposal check error
+    ProposalCheckError = 130;
+    /// consensus check proposal error
+    ConsensusProposalCheckError = 131;
+    /// block hash check error
+    BlockCheckError = 132;
+    /// the sig of chain status init check error
+    CSISigCheckError = 133;
+    /// chain version or chain id check error
+    VersionOrIdCheckError = 134;
+    /// hash check error
+    HashCheckError = 135;
+    /// hash len is not correct
+    HashLenError = 136;
+    /// signature len is not correct
+    SigLenError = 137;
+    /// signature check error
+    SigCheckError = 138;
+    /// the node in sync mode
+    NodeInSyncMode = 139;
+    /// Dup tx in history
+    HistoryDupTx = 140;
+    /// emergency brake
+    EmergencyBrake = 141;
+    /// auth check tx's version error
+    InvalidVersion = 142;
+    /// auth check tx's to error
+    InvalidTo = 143;
+    /// auth check tx's nonce error
+    InvalidNonce = 144;
+    /// auth check tx's valid until block error
+    InvalidValidUntilBlock = 145;
+    /// auth check tx's value error
+    InvalidValue = 146;
+    /// auth check tx's chain id error
+    InvalidChainId = 147;
+    /// auth limit utxo's witness only one
+    InvalidWitness = 148;
+    /// auth check utxo's lock id error
+    InvalidLockId = 149;
+    /// auth check utxo's pre tx hash error
+    InvalidPreHash = 150;
+    /// auth check send is not admin
+    AdminCheckError = 151;
+    /// network msg's module not controller
+    ModuleNotController = 152;
+    /// the quota use of tx has exceeded quota-limit
+    QuotaUsedExceed = 153;
+    /// not get the state_root
+    NoStateRoot = 154;
+    /// block state_root check error
+    StateRootCheckError = 155;
+    /// update system-config error; wrong prehash or unallowed lockid
+    UpdateSystemConfigError = 156;
+    
+    /// Consensus from 200
+    /// check proposal proof error
+    ConsensusServerNotReady = 200;
+    /// proof of proposal error
+    ProposalProofError = 201;
+
+    /// Crypto from 300
+    /// Crypto server not ready
+    CryptoServerNotReady = 300;
+    /// hash result is none
+    NoneHashResult = 301;
+    /// construct signature error
+    ConstructSigError = 302;
+    /// construct key pair error
+    ConstructKeyPairError = 303;
+    /// sign error
+    SignError = 304;
+
+    /// Network from 400
+    /// Network server not ready
+    NetworkServerNotReady = 400;
+    /// send message error
+    SendMsgError = 401;
+    /// broadcast message error
+    BroadcastMsgError = 402;
+    /// multi-addr error
+    MultiAddrParseError = 403;
+    /// dial node failed
+    DialNodeFail = 404;
+    // add an existed peer
+    AddExistedPeer = 405;
+
+    /// executor from 500
+    /// Executor server not ready
+    ExecuteServerNotReady = 500;
+    /// internal channel disconnected
+    InternalChannelDisconnected = 501;
+    /// early same block reenter
+    ReenterBlock = 502;
+    /// invalid block reenter
+    ReenterInvalidBlock = 503;
+
+    /// storage from 600
+    /// storage server not ready
+    StorageServerNotReady = 600;
+    /// kv not found
+    NotFound = 601;
+    /// invalid region
+    InvalidRegion = 602;
+    /// invalid key
+    InvalidKey = 603;
+    /// bad region
+    BadRegion = 604;
+    /// store data error
+    StoreError = 605;
+    /// load data error
+    LoadError = 606;
+    /// delete data error
+    DeleteError = 607;
+}
