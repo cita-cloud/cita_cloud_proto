@@ -96,16 +96,16 @@ message TotalNodeNetInfo {
     repeated NodeNetInfo nodes = 1;
 }
 
-message NodeHeight {
+message PeerStatus {
     uint64 height = 1;
     bytes address = 2;
+    NodeNetInfo node_net_info = 3;
 }
 
 message NodeStatus {
     bool is_sync = 1;
     string version = 2; 
-    NodeHeight self_status = 3;
-    repeated NodeHeight peer_status = 4;
-    uint64 connected_peer_count = 5;
-    TotalNodeNetInfo connected_peers_info = 6;
+    PeerStatus self_status = 3;
+    uint64 peers_count = 4;
+    repeated PeerStatus peers_status = 5;
 }
