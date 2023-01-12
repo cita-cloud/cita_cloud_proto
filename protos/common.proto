@@ -108,4 +108,5 @@ message NodeStatus {
     PeerStatus self_status = 3;
     uint64 peers_count = 4;
     repeated PeerStatus peers_status = 5;
+    bool is_danger = 6;
 }
