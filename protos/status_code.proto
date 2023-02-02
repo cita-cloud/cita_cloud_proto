@@ -141,6 +141,18 @@ enum StatusCodeEnum {
     StateRootCheckError = 155;
     /// update system-config error; wrong prehash or unallowed lockid
     UpdateSystemConfigError = 156;
+    /// proposal height and block height not equal
+    HeightInconsistent = 157;
+    /// proposal pre_stateroot check error
+    PreStaterootError = 158;
+    /// proposal pre_proof check error
+    PreProofError = 159;
+    /// block header proposer check error
+    ProposerError = 160;
+    /// block header timestamp check error
+    TimestampError = 161;
+    /// block header transaction_root check error
+    TransactionRootError = 162;
     
     /// Consensus from 200
     /// check proposal proof error
