@@ -109,4 +109,5 @@ message NodeStatus {
     uint64 peers_count = 4;
     repeated PeerStatus peers_status = 5;
     bool is_danger = 6;
+    uint64 init_block_number = 7;
 }
