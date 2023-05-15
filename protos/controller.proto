@@ -16,6 +16,7 @@ syntax = "proto3";
 
 import "common.proto";
 import "blockchain.proto";
+import "vm/evm.proto";
 
 package controller;
 
@@ -48,6 +49,15 @@ message SystemConfig {
 
 message TransactionIndex {
     uint64 tx_index = 1;
+}
+
+message CrossChainProof {
+    uint32 version = 1;
+    bytes chain_id = 2;
+    common.ProposalInner proposal = 3;
+    evm.ReceiptProof receipt_proof = 4;
+    bytes proof = 5;
+    bytes state_root = 6;
 }
 
 service RPCService {
@@ -87,6 +97,8 @@ service RPCService {
     rpc AddNode(common.NodeNetInfo) returns (common.StatusCode);
 
     rpc GetNodeStatus(common.Empty) returns (common.NodeStatus);
+
+    rpc GetCrossChainProof(common.Hash) returns (CrossChainProof);
 }
 
 service Consensus2ControllerService {

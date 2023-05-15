@@ -66,6 +66,22 @@ message ByteQuota {
   bytes bytes_quota = 1;
 }
 
+message ReceiptProof {
+  bytes receipt = 1;
+  bytes receipt_proof = 2;
+  RootsInfo roots_info = 3;
+}
+
+message RootsInfo {
+  uint64 height = 1;
+  bytes state_root = 2;
+  bytes receipt_root = 3;
+}
+
+message BlockNumber {
+  uint64 block_number = 1;
+}
+
 service RPCService {
   rpc GetTransactionReceipt(common.Hash) returns (Receipt);
 
@@ -78,4 +94,8 @@ service RPCService {
   rpc GetAbi(common.Address) returns (ByteAbi);
 
   rpc EstimateQuota(executor.CallRequest) returns (ByteQuota);
+
+  rpc GetReceiptProof(common.Hash) returns (ReceiptProof);
+
+  rpc GetRootsInfo(BlockNumber) returns (RootsInfo);
 }

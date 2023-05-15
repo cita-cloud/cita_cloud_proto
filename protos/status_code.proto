@@ -141,6 +141,8 @@ enum StatusCodeEnum {
     StateRootCheckError = 155;
     /// update system-config error; wrong prehash or unallowed lockid
     UpdateSystemConfigError = 156;
+    /// not get the receipt proof
+    NoReceiptProof = 157;
     
     /// Consensus from 200
     /// check proposal proof error
