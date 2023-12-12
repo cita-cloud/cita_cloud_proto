@@ -79,23 +79,55 @@ message RootsInfo {
 }
 
 message BlockNumber {
-  uint64 block_number = 1;
+  oneof lable {
+    uint64 height = 1;
+    string tag = 2;
+    bytes hash = 3;
+  }
+}
+
+message GetCodeRequest {
+  common.Address address = 1;
+  BlockNumber block_number = 2;
+}
+
+message GetBalanceRequest {
+  common.Address address = 1;
+  BlockNumber block_number = 2;
+}
+
+message GetTransactionCountRequest {
+  common.Address address = 1;
+  BlockNumber block_number = 2;
+}
+
+message GetAbiRequest {
+  common.Address address = 1;
+  BlockNumber block_number = 2;
+}
+
+message GetStorageAtRequest {
+  common.Address address = 1;
+  common.Hash position = 2;
+  BlockNumber block_number = 3;
 }
 
 service RPCService {
   rpc GetTransactionReceipt(common.Hash) returns (Receipt);
 
-  rpc GetCode(common.Address) returns (ByteCode);
+  rpc GetCode(GetCodeRequest) returns (ByteCode);
 
-  rpc GetBalance(common.Address) returns (Balance);
+  rpc GetBalance(GetBalanceRequest) returns (Balance);
 
-  rpc GetTransactionCount(common.Address) returns (Nonce);
+  rpc GetTransactionCount(GetTransactionCountRequest) returns (Nonce);
 
-  rpc GetAbi(common.Address) returns (ByteAbi);
+  rpc GetAbi(GetAbiRequest) returns (ByteAbi);
 
   rpc EstimateQuota(executor.CallRequest) returns (ByteQuota);
 
   rpc GetReceiptProof(common.Hash) returns (ReceiptProof);
 
   rpc GetRootsInfo(BlockNumber) returns (RootsInfo);
+
+  rpc GetStorageAt(GetStorageAtRequest) returns (common.Hash);
 }
