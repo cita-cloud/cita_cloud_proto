@@ -175,8 +175,6 @@ enum StatusCodeEnum {
     DialNodeFail = 404;
     // add an existed peer
     AddExistedPeer = 405;
-    // too many requests
-    TooManyRequests = 406;
 
     /// executor from 500
     /// Executor server not ready
