@@ -30,10 +30,15 @@ message BlockNumber {
 
 message SystemConfig {
     uint32 version = 1;
+    // length(chain_id) == 32
     bytes chain_id = 2;
+    // address of super admin
     bytes admin = 3;
+    // unit: second
     uint32 block_interval = 4;
+    // list of validator addresses
     repeated bytes validators = 5;
+    // true for emergency case, chain will brake
     bool emergency_brake = 6;
     bytes version_pre_hash = 7;
     bytes chain_id_pre_hash = 8;

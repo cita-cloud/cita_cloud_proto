@@ -69,6 +69,7 @@ service CryptoService {
     rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
 
     // Recover signature
+    // for sign algorithm not recoverable, append pubkey after signature
     rpc RecoverSignature(RecoverSignatureRequest) returns (RecoverSignatureResponse);
 
     // check transactions

@@ -42,6 +42,7 @@ message Address {
 
 message Proposal {
     uint64 height = 1;
+    // encoded ProposalInner
     bytes data = 2;
 }
 
@@ -57,10 +58,13 @@ message ProposalWithProof {
 
 message ConsensusConfiguration {
     uint64 height = 1;
+    // unit: second
     uint32 block_interval = 2;
+    // list of validator addresses
     repeated bytes validators = 3;
 }
 
+// https://github.com/cita-cloud/rfcs/blob/master/rfcs/0004-status_code/004-CITA_CLOUD_PROTO%20StatusCode.md
 message StatusCode {
     uint32 code = 1;
 }
@@ -81,7 +85,9 @@ message ConsensusConfigurationResponse {
 }
 
 message NodeNetInfo {
+    // https://multiformats.io/multiaddr/
     string multi_address = 1;
+    // short id of node address
     uint64 origin = 2;
 }
 
@@ -91,6 +97,7 @@ message TotalNodeNetInfo {
 
 message PeerStatus {
     uint64 height = 1;
+    // node address
     bytes address = 2;
     NodeNetInfo node_net_info = 3;
 }
