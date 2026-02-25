@@ -23,9 +23,9 @@ package executor;
 // implement can customize it.
 
 message CallRequest {
-    // 1. length is 20 bytes for evm.
-    // 2. if executor is multi-vm, it will be a path.
+    // length(to) == 20
     bytes to = 1;
+    // optional
     bytes from = 2;
     // 4 bytes for evm.
     bytes method = 3;

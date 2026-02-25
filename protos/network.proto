@@ -23,8 +23,11 @@ message NetworkStatusResponse {
 }
 
 message NetworkMsg {
+    // Target module identifier for message routing
     string module = 1;
+    // msg type
     string type = 2;
+    //  short id of node address
     uint64 origin = 3;
     bytes msg = 4;
 }
